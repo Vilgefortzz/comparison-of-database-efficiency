@@ -20,29 +20,15 @@ public class Controller implements Initializable {
     @FXML
     private ToggleButton mysqlConnectorToggleButton;
     @FXML
-    private ImageView mongodbConnectorImageView;
-    @FXML
     private ToggleButton mongodbConnectorToggleButton;
 
     /**
      * Database manager
      */
     @FXML
-    private ImageView sql1ImageView;
-    @FXML
-    private ImageView mysql1ImageView;
-    @FXML
     private Button sqlToMysqlImportButton;
     @FXML
-    private ImageView mysql2ImageView;
-    @FXML
-    private ImageView mongodbImageView;
-    @FXML
     private Button mysqlToMongodbImportButton;
-    @FXML
-    private ImageView sql2ImageView;
-    @FXML
-    private ImageView associativeNetworkImageView;
     @FXML
     private Button sqlToAssociativeNetworkGenerateButton;
 
