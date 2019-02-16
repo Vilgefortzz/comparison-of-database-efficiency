@@ -131,7 +131,7 @@
                <font>
                   <Font name="Lato Regular" size="13.0" />
                </font></Button>
-            <Button fx:id="clearButton" layoutX="66.0" layoutY="180.0" mnemonicParsing="false" text="Clear">
+            <Button fx:id="clearButton" onAction="#clearQuery" layoutX="66.0" layoutY="180.0" mnemonicParsing="false" text="Clear">
                <font>
                   <Font name="Lato Regular" size="13.0" />
                </font></Button>

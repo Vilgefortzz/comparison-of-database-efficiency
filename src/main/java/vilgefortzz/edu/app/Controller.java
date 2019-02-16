@@ -65,6 +65,11 @@ public class Controller implements Initializable {
         initializeRadioButtons();
     }
 
+    @FXML
+    public void clearQuery() {
+        queryTextArea.clear();
+    }
+
     private void initializeRadioButtons() {
 
         mysqlRadioButton.setToggleGroup(dbConnection);
