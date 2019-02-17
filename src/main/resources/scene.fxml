@@ -22,7 +22,7 @@
                   <Font name="Lato Bold Italic" size="24.0" />
                </font>
             </Label>
-            <Label layoutX="14.0" layoutY="60.0" text="1. Database connector" underline="true">
+            <Label layoutX="14.0" layoutY="60.0" text="1. Database connection" underline="true">
                <font>
                   <Font name="Lato Bold" size="13.0" />
                </font>
@@ -35,11 +35,11 @@
                <image>
                   <Image url="@images/mongodb.png" />
                </image></ImageView>
-            <ToggleButton fx:id="mysqlConnectorToggleButton" layoutX="315.0" layoutY="88.0" mnemonicParsing="false" text="On" textFill="#08d70b">
+            <ToggleButton fx:id="mysqlConnectorToggleButton" layoutX="315.0" layoutY="88.0" mnemonicParsing="false" onAction="#connectToMysql" text="On" textFill="#08d70b">
                <font>
                   <Font name="Lato Bold" size="13.0" />
                </font></ToggleButton>
-            <ToggleButton fx:id="mongodbConnectorToggleButton" layoutX="477.0" layoutY="88.0" mnemonicParsing="false" text="On" textFill="#08d70b">
+            <ToggleButton fx:id="mongodbConnectorToggleButton" layoutX="477.0" layoutY="88.0" mnemonicParsing="false" onAction="#connectToMongodb" text="On" textFill="#08d70b">
                <font>
                   <Font name="Lato Bold" size="13.0" />
                </font>
@@ -131,7 +131,7 @@
                <font>
                   <Font name="Lato Regular" size="13.0" />
                </font></Button>
-            <Button fx:id="clearButton" onAction="#clearQuery" layoutX="66.0" layoutY="180.0" mnemonicParsing="false" text="Clear">
+            <Button fx:id="clearButton" layoutX="66.0" layoutY="180.0" mnemonicParsing="false" onAction="#clearQuery" text="Clear">
                <font>
                   <Font name="Lato Regular" size="13.0" />
                </font></Button>
