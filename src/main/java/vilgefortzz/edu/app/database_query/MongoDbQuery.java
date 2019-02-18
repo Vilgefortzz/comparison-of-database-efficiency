@@ -1,6 +1,6 @@
 package vilgefortzz.edu.app.database_query;
 
-public class MongoDbQuery extends Query implements Transformation {
+public class MongoDbQuery extends Query {
 
 
     @Override

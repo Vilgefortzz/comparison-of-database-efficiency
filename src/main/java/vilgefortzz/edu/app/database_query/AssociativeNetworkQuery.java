@@ -1,6 +1,6 @@
 package vilgefortzz.edu.app.database_query;
 
-public class AssociativeNetworkQuery extends Query implements Transformation {
+public class AssociativeNetworkQuery extends Query {
 
 
     @Override

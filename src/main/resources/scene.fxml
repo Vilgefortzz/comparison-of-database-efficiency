@@ -11,6 +11,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vilgefortzz.edu.app.Controller">
@@ -27,23 +28,29 @@
                   <Font name="Lato Bold" size="13.0" />
                </font>
             </Label>
-            <ImageView fitHeight="80.0" fitWidth="130.0" layoutX="185.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="80.0" fitWidth="130.0" layoutX="154.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/mysql.png" />
                </image></ImageView>
-            <ImageView fitHeight="112.0" fitWidth="105.0" layoutX="381.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="112.0" fitWidth="105.0" layoutX="332.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/mongodb.png" />
                </image></ImageView>
-            <ToggleButton fx:id="mysqlConnectorToggleButton" layoutX="315.0" layoutY="88.0" mnemonicParsing="false" onAction="#connectToMysql" text="On" textFill="#08d70b">
+            <ToggleButton fx:id="mysqlConnectorToggleButton" layoutX="284.0" layoutY="88.0" mnemonicParsing="false" onAction="#connectToMysql" text="On" textFill="#08d70b">
                <font>
                   <Font name="Lato Bold" size="13.0" />
                </font></ToggleButton>
-            <ToggleButton fx:id="mongodbConnectorToggleButton" layoutX="477.0" layoutY="88.0" mnemonicParsing="false" onAction="#connectToMongodb" text="On" textFill="#08d70b">
+            <ToggleButton fx:id="mongodbConnectorToggleButton" layoutX="427.0" layoutY="88.0" mnemonicParsing="false" onAction="#connectToMongodb" text="On" textFill="#08d70b">
                <font>
                   <Font name="Lato Bold" size="13.0" />
                </font>
             </ToggleButton>
+            <ImageView fitHeight="80.0" fitWidth="83.0" layoutX="507.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/associative_network.png" />
+               </image>
+            </ImageView>
+            <Circle fx:id="associativeNetworkConnectorCircle" fill="#e1400a" layoutX="611.0" layoutY="103.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
          </children></Pane>
       <Pane prefHeight="200.0" prefWidth="200.0">
          <children>
