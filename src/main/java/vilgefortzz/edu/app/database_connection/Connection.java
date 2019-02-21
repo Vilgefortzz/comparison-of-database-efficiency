@@ -10,7 +10,8 @@ import java.io.InputStreamReader;
 public abstract class Connection implements Connector {
 
     private Query query;
-    private boolean isConnected;
+    private boolean connectedToServer;
+    private boolean connectedToDatabase;
 
     private ProcessBuilder builder = new ProcessBuilder();
 
@@ -22,19 +23,27 @@ public abstract class Connection implements Connector {
         this.query = query;
     }
 
-    public boolean isConnected() {
-        return isConnected;
+    public boolean isConnectedToServer() {
+        return connectedToServer;
     }
 
-    public void setConnected(boolean connected) {
-        isConnected = connected;
+    public void setConnectedToServer(boolean connectedToServer) {
+        this.connectedToServer = connectedToServer;
+    }
+
+    public boolean isConnectedToDatabase() {
+        return connectedToDatabase;
+    }
+
+    public void setConnectedToDatabase(boolean connectedToDatabase) {
+        this.connectedToDatabase = connectedToDatabase;
     }
 
     public void clearQuery() {
         query = null;
     }
 
-    protected boolean executeCommand(String... commands) throws IOException, InterruptedException {
+    protected boolean executeCommand(String... commands) throws IOException {
 
         builder.command(commands);
         builder.redirectErrorStream(true);

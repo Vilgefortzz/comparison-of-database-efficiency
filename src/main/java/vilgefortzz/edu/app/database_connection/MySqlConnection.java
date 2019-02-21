@@ -7,7 +7,7 @@ import java.io.IOException;
 public class MySqlConnection extends Connection {
 
     @Override
-    public boolean connect() throws IOException, InterruptedException {
+    public boolean connect() throws IOException {
 
         String command1 = "service";
         String command2 = "mysql";
@@ -16,7 +16,7 @@ public class MySqlConnection extends Connection {
     }
 
     @Override
-    public boolean disconnect() throws IOException, InterruptedException {
+    public boolean disconnect() throws IOException {
 
         String command1 = "service";
         String command2 = "mysql";

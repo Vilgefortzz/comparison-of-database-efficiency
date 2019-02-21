@@ -87,26 +87,14 @@ public class Controller implements Initializable {
     public void connectToMysql() throws IOException, InterruptedException {
 
         Connection mysql = connections.get("mysql");
-
-        if (mysqlConnectorToggleButton.isSelected()) {
-            if (!mysql.isConnected() && mysql.connect()) {
-                mysqlConnectorToggleButton.setText("Off");
-                mysqlConnectorToggleButton.setTextFill(Color.web("#e1400a"));
-                mysql.setConnected(true);
-            }
-            return;
-        }
-
-        if (mysql.isConnected() && mysql.disconnect()) {
-            mysqlConnectorToggleButton.setText("On");
-            mysqlConnectorToggleButton.setTextFill(Color.web("#08d70b"));
-            mysql.setConnected(false);
-        }
+        connect(mysql, mysqlConnectorToggleButton);
     }
 
     @FXML
-    public void connectToMongodb() {
-        queryTextArea.clear();
+    public void connectToMongodb() throws IOException, InterruptedException {
+
+        Connection mongodb = connections.get("mongodb");
+        connect(mongodb, mongodbConnectorToggleButton);
     }
 
     @FXML
@@ -135,5 +123,23 @@ public class Controller implements Initializable {
         queries.put("mysql", new MySqlQuery());
         queries.put("mongodb", new MongoDbQuery());
         queries.put("associativeNetwork", new AssociativeNetworkQuery());
+    }
+
+    private void connect(Connection connection, ToggleButton connectionToggleButton) throws IOException, InterruptedException {
+
+        if (connectionToggleButton.isSelected()) {
+            if (!connection.isConnectedToServer() && connection.connect()) {
+                connectionToggleButton.setText("Off");
+                connectionToggleButton.setTextFill(Color.web("#e1400a"));
+                connection.setConnectedToServer(true);
+            }
+            return;
+        }
+
+        if (connection.isConnectedToServer() && connection.disconnect()) {
+            connectionToggleButton.setText("On");
+            connectionToggleButton.setTextFill(Color.web("#08d70b"));
+            connection.setConnectedToServer(false);
+        }
     }
 }
