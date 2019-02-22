@@ -11,7 +11,9 @@ public class Configuration {
 
     public static void readConfiguration() {
 
-        Dotenv dotenv = Dotenv.load();
+        Dotenv dotenv = Dotenv.configure()
+                .directory("./")
+                .load();
 
         MYSQL_HOST = dotenv.get("MYSQL_HOST");
         MYSQL_PORT = dotenv.get("MYSQL_PORT");
