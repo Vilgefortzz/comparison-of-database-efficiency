@@ -2,17 +2,29 @@ package vilgefortzz.edu.app.database_connection;
 
 import vilgefortzz.edu.app.database_query.Query;
 
+import java.io.IOException;
+
 public class AssociativeNetworkConnection extends Connection {
 
 
     @Override
-    public boolean connect() {
+    public boolean connectToServer() {
         return true;
     }
 
     @Override
-    public boolean disconnect() {
+    public boolean disconnectFromServer() {
         return true;
+    }
+
+    @Override
+    public boolean connectToDatabase(String dbName) throws IOException, InterruptedException {
+        return true;
+    }
+
+    @Override
+    public String showDatabases() throws IOException, InterruptedException {
+        return "";
     }
 
     @Override

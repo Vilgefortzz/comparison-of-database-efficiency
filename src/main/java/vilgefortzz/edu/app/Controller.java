@@ -9,6 +9,7 @@ import vilgefortzz.edu.app.database_connection.AssociativeNetworkConnection;
 import vilgefortzz.edu.app.database_connection.Connection;
 import vilgefortzz.edu.app.database_connection.MongoDbConnection;
 import vilgefortzz.edu.app.database_connection.MySqlConnection;
+import vilgefortzz.edu.app.database_manager.ImportManager;
 import vilgefortzz.edu.app.database_query.AssociativeNetworkQuery;
 import vilgefortzz.edu.app.database_query.MongoDbQuery;
 import vilgefortzz.edu.app.database_query.MySqlQuery;
@@ -16,9 +17,12 @@ import vilgefortzz.edu.app.database_query.Query;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+
+import static vilgefortzz.edu.app.database_configuration.Configuration.readConfiguration;
 
 public class Controller implements Initializable {
 
@@ -65,6 +69,27 @@ public class Controller implements Initializable {
     private RadioButton associativeNetworkRadioButton;
 
     /**
+     * Database chooser
+     */
+    @FXML
+    private Label mysqlDatabasesLabel;
+    @FXML
+    private Button showMysqlDbsButton;
+    @FXML
+    private TextField mysqlDbNameTextField;
+    @FXML
+    private Button connectToMysqlDbButton;
+
+    @FXML
+    private Label mongoDatabasesLabel;
+    @FXML
+    private Button showMongoDbsButton;
+    @FXML
+    private TextField mongoDbNameTextField;
+    @FXML
+    private Button connectToMongoDbButton;
+
+    /**
      * Results
      */
     @FXML
@@ -75,26 +100,63 @@ public class Controller implements Initializable {
     private Map<String, Connection> connections = new HashMap<>();
     private Map<String, Query> queries = new HashMap<>();
 
+    private ImportManager importManager = new ImportManager();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        readConfiguration();
         initializeRadioButtons();
         initializeConnections();
         initializeQueries();
     }
 
     @FXML
-    public void connectToMysql() throws IOException, InterruptedException {
+    public void connectToMysqlServer() throws IOException, InterruptedException, SQLException {
 
         Connection mysql = connections.get("mysql");
-        connect(mysql, mysqlConnectorToggleButton);
+        connectToServer(mysql, mysqlConnectorToggleButton);
     }
 
     @FXML
-    public void connectToMongodb() throws IOException, InterruptedException {
+    public void connectToMongodbServer() throws IOException, InterruptedException, SQLException {
 
         Connection mongodb = connections.get("mongodb");
-        connect(mongodb, mongodbConnectorToggleButton);
+        connectToServer(mongodb, mongodbConnectorToggleButton);
+    }
+
+    @FXML
+    public void connectToMysqlDatabase() throws IOException, InterruptedException, SQLException {
+
+        String dbName = mysqlDbNameTextField.getText();
+        Connection mysql = connections.get("mysql");
+        mysql.connectToDatabase(dbName);
+    }
+
+    @FXML
+    public void connectToMongoDatabase() throws IOException, InterruptedException, SQLException {
+
+        String dbName = mongoDbNameTextField.getText();
+        Connection mongodb = connections.get("mongodb");
+        mongodb.connectToDatabase(dbName);
+    }
+
+    @FXML
+    public void showMysqlDatabases() throws IOException, InterruptedException, SQLException {
+
+        mysqlDbNameTextField.setDisable(false);
+        connectToMysqlDbButton.setDisable(false);
+
+        Connection mysql = connections.get("mysql");
+        String databases = mysql.showDatabases();
+        mysqlDatabasesLabel.setText(databases);
+    }
+
+    @FXML
+    public void showMongoDatabases() throws IOException, InterruptedException {
+
+        mongoDbNameTextField.setDisable(false);
+        connectToMongoDbButton.setDisable(false);
     }
 
     @FXML
@@ -125,10 +187,10 @@ public class Controller implements Initializable {
         queries.put("associativeNetwork", new AssociativeNetworkQuery());
     }
 
-    private void connect(Connection connection, ToggleButton connectionToggleButton) throws IOException, InterruptedException {
+    private void connectToServer(Connection connection, ToggleButton connectionToggleButton) throws IOException, InterruptedException, SQLException {
 
         if (connectionToggleButton.isSelected()) {
-            if (!connection.isConnectedToServer() && connection.connect()) {
+            if (!connection.isConnectedToServer() && connection.connectToServer()) {
                 connectionToggleButton.setText("Off");
                 connectionToggleButton.setTextFill(Color.web("#e1400a"));
                 connection.setConnectedToServer(true);
@@ -136,7 +198,7 @@ public class Controller implements Initializable {
             return;
         }
 
-        if (connection.isConnectedToServer() && connection.disconnect()) {
+        if (connection.isConnectedToServer() && connection.disconnectFromServer()) {
             connectionToggleButton.setText("On");
             connectionToggleButton.setTextFill(Color.web("#08d70b"));
             connection.setConnectedToServer(false);

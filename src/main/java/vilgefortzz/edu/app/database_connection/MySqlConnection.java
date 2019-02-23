@@ -3,25 +3,60 @@ package vilgefortzz.edu.app.database_connection;
 import vilgefortzz.edu.app.database_query.Query;
 
 import java.io.IOException;
+import java.sql.*;
+
+import static vilgefortzz.edu.app.database_configuration.Configuration.*;
 
 public class MySqlConnection extends Connection {
 
+    private String url = "jdbc:mysql://" + MYSQL_HOST + ":" + MYSQL_PORT + "/";
+    private final String useSSL = "?useSSL=false";
+
+    private java.sql.Connection jdbcConnection;
+    private Statement statement;
+
     @Override
-    public boolean connect() throws IOException {
+    public boolean connectToServer() throws IOException, SQLException {
 
         String command1 = "service";
         String command2 = "mysql";
         String command3 = "start";
-        return executeCommand(command1, command2, command3);
+        executeCommand(command1, command2, command3);
+
+        jdbcConnection = DriverManager.getConnection(url + useSSL, MYSQL_USER, MYSQL_PASSWORD);
+        statement = jdbcConnection.createStatement();
+        return statement != null;
     }
 
     @Override
-    public boolean disconnect() throws IOException {
+    public boolean disconnectFromServer() throws IOException {
 
         String command1 = "service";
         String command2 = "mysql";
         String command3 = "stop";
         return executeCommand(command1, command2, command3);
+    }
+
+    @Override
+    public boolean connectToDatabase(String dbName) throws IOException, InterruptedException, SQLException {
+
+        jdbcConnection = DriverManager.getConnection(url + dbName + useSSL, MYSQL_USER, MYSQL_PASSWORD);
+        statement = jdbcConnection.createStatement();
+        return jdbcConnection != null;
+    }
+
+    @Override
+    public String showDatabases() throws IOException, InterruptedException, SQLException {
+
+        jdbcConnection = DriverManager.getConnection(url + useSSL, MYSQL_USER, MYSQL_PASSWORD);
+        String databases = "";
+        DatabaseMetaData meta = jdbcConnection.getMetaData();
+        ResultSet resultSet = meta.getCatalogs();
+        while (resultSet.next()) {
+            String db = resultSet.getString("TABLE_CAT");
+            databases += (db + "\n");
+        }
+        return databases;
     }
 
     @Override

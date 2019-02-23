@@ -9,9 +9,11 @@ import java.io.InputStreamReader;
 
 public abstract class Connection implements Connector {
 
-    private Query query;
+    protected Query query;
     private boolean connectedToServer;
     private boolean connectedToDatabase;
+
+    private String dbName;
 
     private ProcessBuilder builder = new ProcessBuilder();
 
@@ -39,11 +41,19 @@ public abstract class Connection implements Connector {
         this.connectedToDatabase = connectedToDatabase;
     }
 
+    public String getDbName() {
+        return dbName;
+    }
+
+    public void setDbName(String dbName) {
+        this.dbName = dbName;
+    }
+
     public void clearQuery() {
         query = null;
     }
 
-    protected boolean executeCommand(String... commands) throws IOException {
+    public boolean executeCommand(String... commands) throws IOException {
 
         builder.command(commands);
         builder.redirectErrorStream(true);
