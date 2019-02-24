@@ -30,8 +30,11 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 
-#Environment
+# Environment
 .env
+
+# Import/Export databases
+databases/
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*

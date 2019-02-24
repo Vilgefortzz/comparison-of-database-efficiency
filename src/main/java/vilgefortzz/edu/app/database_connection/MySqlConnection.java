@@ -25,6 +25,7 @@ public class MySqlConnection extends Connection {
 
         jdbcConnection = DriverManager.getConnection(url + useSSL, MYSQL_USER, MYSQL_PASSWORD);
         statement = jdbcConnection.createStatement();
+
         return statement != null;
     }
 
@@ -34,21 +35,24 @@ public class MySqlConnection extends Connection {
         String command1 = "service";
         String command2 = "mysql";
         String command3 = "stop";
+
         return executeCommand(command1, command2, command3);
     }
 
     @Override
-    public boolean connectToDatabase(String dbName) throws IOException, InterruptedException, SQLException {
+    public boolean connectToDatabase(String dbName) throws SQLException {
 
         jdbcConnection = DriverManager.getConnection(url + dbName + useSSL, MYSQL_USER, MYSQL_PASSWORD);
         statement = jdbcConnection.createStatement();
+
         return jdbcConnection != null;
     }
 
     @Override
-    public String showDatabases() throws IOException, InterruptedException, SQLException {
+    public String showDatabases() throws SQLException {
 
         jdbcConnection = DriverManager.getConnection(url + useSSL, MYSQL_USER, MYSQL_PASSWORD);
+        statement = jdbcConnection.createStatement();
         String databases = "";
         DatabaseMetaData meta = jdbcConnection.getMetaData();
         ResultSet resultSet = meta.getCatalogs();
@@ -56,8 +60,18 @@ public class MySqlConnection extends Connection {
             String db = resultSet.getString("TABLE_CAT");
             databases += (db + "\n");
         }
+
         return databases;
     }
+
+    public boolean createDatabase(String dbName) throws SQLException {
+
+        jdbcConnection = DriverManager.getConnection(url + useSSL, MYSQL_USER, MYSQL_PASSWORD);
+        statement = jdbcConnection.createStatement();
+        String query = "CREATE DATABASE IF NOT EXISTS " + dbName + ";";
+        return statement.executeUpdate(query) > 0;
+    }
+
 
     @Override
     public void query(Query query) {

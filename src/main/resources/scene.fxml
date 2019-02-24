@@ -60,7 +60,7 @@
                   <Font name="Lato Bold" size="13.0" />
                </font>
             </Label>
-            <Button fx:id="sqlToMysqlImportButton" layoutX="65.0" layoutY="95.0" mnemonicParsing="false" text="Import">
+            <Button fx:id="sqlToMysqlImportButton" layoutX="65.0" layoutY="95.0" mnemonicParsing="false" onAction="#importFromSqlToMysql" text="Import">
                <font>
                   <Font name="Lato Regular" size="13.0" />
                </font></Button>

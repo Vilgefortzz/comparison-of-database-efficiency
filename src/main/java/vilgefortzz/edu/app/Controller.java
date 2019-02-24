@@ -5,6 +5,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import vilgefortzz.edu.app.database_connection.AssociativeNetworkConnection;
 import vilgefortzz.edu.app.database_connection.Connection;
 import vilgefortzz.edu.app.database_connection.MongoDbConnection;
@@ -15,6 +17,7 @@ import vilgefortzz.edu.app.database_query.MongoDbQuery;
 import vilgefortzz.edu.app.database_query.MySqlQuery;
 import vilgefortzz.edu.app.database_query.Query;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -27,6 +30,11 @@ import static vilgefortzz.edu.app.database_configuration.Configuration.readConfi
 public class Controller implements Initializable {
 
     private final ToggleGroup dbConnection = new ToggleGroup();
+
+    /**
+     * Paths
+     */
+    private final String DATABASES_DIR_PATH = "databases/";
 
     /**
      * Database connection
@@ -157,6 +165,28 @@ public class Controller implements Initializable {
 
         mongoDbNameTextField.setDisable(false);
         connectToMongoDbButton.setDisable(false);
+    }
+
+    @FXML
+    public void importFromSqlToMysql() throws IOException, SQLException {
+
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Import from SQL to MySQL");
+        chooser.setInitialDirectory(new File(DATABASES_DIR_PATH));
+        chooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("sql files","sql"));
+        File file = chooser.showOpenDialog(new Stage());
+
+        if (file != null) {
+            String dbFile = file.getName();
+            String extension = dbFile.split("\\.")[1];
+            if (extension.equals("sql")) {
+                String dbName = dbFile.split("\\.")[0];
+                MySqlConnection mysql = (MySqlConnection) connections.get("mysql");
+                importManager.importToMysql(mysql, dbFile, dbName);
+            } else {
+                System.out.println("You can only import sql files!");
+            }
+        }
     }
 
     @FXML
