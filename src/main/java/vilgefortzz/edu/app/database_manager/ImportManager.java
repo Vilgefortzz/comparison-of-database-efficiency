@@ -13,7 +13,7 @@ public class ImportManager {
 
     public boolean importToMysql(MySqlConnection connection, String dbFile, String dbName) throws IOException, SQLException {
 
-        if (createMysqlDatabase(connection, dbName)) {
+        if (connection.createDatabase(dbName)) {
             String command1 = "sh";
             String command2 = "-c";
             String command3 = "mysql" + " " +
@@ -24,10 +24,6 @@ public class ImportManager {
             return connection.executeCommand(command1, command2, command3);
         }
         return false;
-    }
-
-    private boolean createMysqlDatabase(MySqlConnection connection, String dbName) throws SQLException {
-        return connection.createDatabase(dbName);
     }
 
     @Override
