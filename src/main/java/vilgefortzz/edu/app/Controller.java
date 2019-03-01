@@ -184,7 +184,8 @@ public class Controller implements Initializable {
             String dbFile = file.getName();
             String extension = dbFile.split("\\.")[1];
             if (extension.equals("sql")) {
-                String dbName = dbFile.split("\\.")[0];
+                String dbName = dbFile.split("\\.")[0].
+                        replaceAll("[^a-zA-Z0-9]", "");
                 MySqlConnection mysql = (MySqlConnection) connections.get("mysql");
                 importManager.importToMysql(mysql, dbFile, dbName);
             } else {
