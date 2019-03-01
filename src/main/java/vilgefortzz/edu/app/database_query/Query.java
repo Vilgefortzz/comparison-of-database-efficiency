@@ -4,6 +4,7 @@ public abstract class Query implements Transformation {
 
     private String query;
     private String type;
+    private Long time;
 
     public Query(String query) {
         this.query = query;
@@ -23,6 +24,14 @@ public abstract class Query implements Transformation {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Long getTime() {
+        return time;
+    }
+
+    public void setTime(Long time) {
+        this.time = time;
     }
 
     @Override

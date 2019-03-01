@@ -212,9 +212,15 @@ public class Controller implements Initializable {
 
             TableView results = mysql.query();
 
+            // Set results
             queryResultsScrollPane.setFitToWidth(true);
             queryResultsScrollPane.setFitToHeight(true);
             queryResultsScrollPane.setContent(results);
+
+            // Set query time
+            long queryTimeInNs = mysql.getQuery().getTime();
+            long queryTimeInMs = queryTimeInNs / 1000;
+            queryTimeLabel.setText(queryTimeInMs + " ms\n" + queryTimeInNs + " ns");
 
         } else if (mongodbRadioButton.isSelected()) {
 

@@ -82,7 +82,12 @@ public class MySqlConnection extends Connection {
         if (connectedToDatabase) {
             jdbcConnection = DriverManager.getConnection(url + dbName + useSSL, MYSQL_USER, MYSQL_PASSWORD);
             statement = jdbcConnection.createStatement();
+
+            long startQuery = System.nanoTime();
             ResultSet resultSet = statement.executeQuery(query.getQuery());
+            long endQuery = System.nanoTime();
+
+            query.setTime(endQuery - startQuery);
 
             return resultsFormatter.prepareResultsForTable(resultSet);
         }

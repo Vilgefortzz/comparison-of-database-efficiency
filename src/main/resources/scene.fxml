@@ -223,12 +223,12 @@
                   <Font name="Lato Bold" size="13.0" />
                </font>
             </Label>
-            <Label layoutX="495.0" layoutY="37.0" text="Query time:" textFill="#09c658">
+            <Label layoutX="546.0" layoutY="37.0" text="Query time:" textFill="#09c658">
                <font>
                   <Font name="Lato Bold Italic" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="queryTimeLabel" layoutX="591.0" layoutY="38.0" text="...">
+            <Label fx:id="queryTimeLabel" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="489.0" layoutY="74.0" prefHeight="80.0" prefWidth="203.0" text="..." textAlignment="CENTER">
                <font>
                   <Font name="Lato Regular" size="18.0" />
                </font>
