@@ -1,6 +1,6 @@
 package vilgefortzz.edu.app.database_connection;
 
-import vilgefortzz.edu.app.database_query.Query;
+import javafx.scene.control.TableView;
 
 import java.io.IOException;
 import java.sql.*;
@@ -44,6 +44,8 @@ public class MySqlConnection extends Connection {
 
         jdbcConnection = DriverManager.getConnection(url + dbName + useSSL, MYSQL_USER, MYSQL_PASSWORD);
         statement = jdbcConnection.createStatement();
+        this.dbName = dbName;
+        connectedToDatabase = true;
 
         return jdbcConnection != null;
     }
@@ -72,10 +74,18 @@ public class MySqlConnection extends Connection {
         return statement.executeUpdate(query) > 0;
     }
 
-
     @Override
-    public void query(Query query) {
+    public TableView query() throws SQLException, IOException {
 
+        if (connectedToDatabase) {
+            jdbcConnection = DriverManager.getConnection(url + dbName + useSSL, MYSQL_USER, MYSQL_PASSWORD);
+            statement = jdbcConnection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query.getQuery());
+
+            return resultsFormatter.prepareResultsForTable(resultSet);
+        }
+
+        return null;
     }
 
     @Override

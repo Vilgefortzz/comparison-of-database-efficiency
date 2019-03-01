@@ -1,6 +1,6 @@
 package vilgefortzz.edu.app.database_connection;
 
-import vilgefortzz.edu.app.database_query.Query;
+import javafx.scene.control.TableView;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -14,5 +14,5 @@ public interface Connector {
 
     String showDatabases() throws IOException, InterruptedException, SQLException;
 
-    void query(Query query);
+    TableView query() throws SQLException, IOException;
 }

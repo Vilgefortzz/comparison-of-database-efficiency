@@ -5,6 +5,10 @@ public abstract class Query implements Transformation {
     private String query;
     private String type;
 
+    public Query(String query) {
+        this.query = query;
+    }
+
     public String getQuery() {
         return query;
     }

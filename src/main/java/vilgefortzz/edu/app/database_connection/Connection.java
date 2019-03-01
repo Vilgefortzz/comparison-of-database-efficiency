@@ -1,6 +1,7 @@
 package vilgefortzz.edu.app.database_connection;
 
 import vilgefortzz.edu.app.database_query.Query;
+import vilgefortzz.edu.app.database_results.ResultsFormatter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,10 +11,11 @@ import java.io.InputStreamReader;
 public abstract class Connection implements Connector {
 
     protected Query query;
-    private boolean connectedToServer;
-    private boolean connectedToDatabase;
+    protected boolean connectedToServer;
+    protected boolean connectedToDatabase;
 
-    private String dbName;
+    protected String dbName;
+    protected ResultsFormatter resultsFormatter = new ResultsFormatter();
 
     private ProcessBuilder builder = new ProcessBuilder();
 

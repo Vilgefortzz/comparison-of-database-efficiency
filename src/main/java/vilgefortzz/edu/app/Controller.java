@@ -15,7 +15,6 @@ import vilgefortzz.edu.app.database_manager.ImportManager;
 import vilgefortzz.edu.app.database_query.AssociativeNetworkQuery;
 import vilgefortzz.edu.app.database_query.MongoDbQuery;
 import vilgefortzz.edu.app.database_query.MySqlQuery;
-import vilgefortzz.edu.app.database_query.Query;
 
 import java.io.File;
 import java.io.IOException;
@@ -82,6 +81,8 @@ public class Controller implements Initializable {
     @FXML
     private Label mysqlDatabasesLabel;
     @FXML
+    private ScrollPane mysqlDatabasesScrollPane;
+    @FXML
     private Button showMysqlDbsButton;
     @FXML
     private TextField mysqlDbNameTextField;
@@ -90,6 +91,8 @@ public class Controller implements Initializable {
 
     @FXML
     private Label mongoDatabasesLabel;
+    @FXML
+    private ScrollPane mongoDatabasesScrollPane;
     @FXML
     private Button showMongoDbsButton;
     @FXML
@@ -103,10 +106,12 @@ public class Controller implements Initializable {
     @FXML
     private Label queryResultsLabel;
     @FXML
+    private ScrollPane queryResultsScrollPane;
+
+    @FXML
     private Label queryTimeLabel;
 
     private Map<String, Connection> connections = new HashMap<>();
-    private Map<String, Query> queries = new HashMap<>();
 
     private ImportManager importManager = new ImportManager();
 
@@ -116,7 +121,6 @@ public class Controller implements Initializable {
         readConfiguration();
         initializeRadioButtons();
         initializeConnections();
-        initializeQueries();
     }
 
     @FXML
@@ -190,6 +194,35 @@ public class Controller implements Initializable {
     }
 
     @FXML
+    public void query() throws SQLException, IOException {
+
+        String query = queryTextArea.getText();
+
+        if (mysqlRadioButton.isSelected()) {
+
+            Connection mysql = connections.get("mysql");
+            mysql.setQuery(new MySqlQuery(query));
+
+            TableView results = mysql.query();
+
+            queryResultsScrollPane.setFitToWidth(true);
+            queryResultsScrollPane.setFitToHeight(true);
+            queryResultsScrollPane.setContent(results);
+
+        } else if (mongodbRadioButton.isSelected()) {
+
+            Connection mongodb = connections.get("mongodb");
+            mongodb.setQuery(new MongoDbQuery(query));
+            mongodb.getQuery().transformToMongoDb();
+        } else {
+
+            Connection associativeNetwork = connections.get("associativeNetwork");
+            associativeNetwork.setQuery(new AssociativeNetworkQuery(query));
+            associativeNetwork.getQuery().transformToAssociativeNetwork();
+        }
+    }
+
+    @FXML
     public void clearQuery() {
         queryTextArea.clear();
     }
@@ -208,13 +241,6 @@ public class Controller implements Initializable {
         connections.put("mysql", new MySqlConnection());
         connections.put("mongodb", new MongoDbConnection());
         connections.put("associativeNetwork", new AssociativeNetworkConnection());
-    }
-
-    private void initializeQueries() {
-
-        queries.put("mysql", new MySqlQuery());
-        queries.put("mongodb", new MongoDbQuery());
-        queries.put("associativeNetwork", new AssociativeNetworkQuery());
     }
 
     private void connectToServer(Connection connection, ToggleButton connectionToggleButton) throws IOException, InterruptedException, SQLException {
