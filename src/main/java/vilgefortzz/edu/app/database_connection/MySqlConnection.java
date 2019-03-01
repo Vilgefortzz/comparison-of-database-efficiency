@@ -56,11 +56,13 @@ public class MySqlConnection extends Connection {
         jdbcConnection = DriverManager.getConnection(url + useSSL, MYSQL_USER, MYSQL_PASSWORD);
         statement = jdbcConnection.createStatement();
         String databases = "";
+        int counter = 1;
         DatabaseMetaData meta = jdbcConnection.getMetaData();
         ResultSet resultSet = meta.getCatalogs();
         while (resultSet.next()) {
             String db = resultSet.getString("TABLE_CAT");
-            databases += (db + "\n");
+            databases += (counter + ") " + db + "\n");
+            counter++;
         }
 
         return databases;

@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import vilgefortzz.edu.app.database_connection.AssociativeNetworkConnection;
@@ -160,8 +161,13 @@ public class Controller implements Initializable {
         connectToMysqlDbButton.setDisable(false);
 
         Connection mysql = connections.get("mysql");
-        String databases = mysql.showDatabases();
-        mysqlDatabasesLabel.setText(databases);
+        String mysqlDatabases = mysql.showDatabases();
+
+        Text databases = new Text(mysqlDatabases);
+
+        mysqlDatabasesScrollPane.setFitToWidth(true);
+        mysqlDatabasesScrollPane.setFitToHeight(true);
+        mysqlDatabasesScrollPane.setContent(databases);
     }
 
     @FXML
