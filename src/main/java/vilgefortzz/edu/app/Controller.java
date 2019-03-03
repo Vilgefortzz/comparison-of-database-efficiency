@@ -171,10 +171,19 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    public void showMongoDatabases() throws IOException, InterruptedException {
+    public void showMongoDatabases() throws IOException, InterruptedException, SQLException {
 
         mongoDbNameTextField.setDisable(false);
         connectToMongoDbButton.setDisable(false);
+
+        Connection mongodb = connections.get("mongodb");
+        String mongoDatabases = mongodb.showDatabases();
+
+        Text databases = new Text(mongoDatabases);
+
+        mongoDatabasesScrollPane.setFitToWidth(true);
+        mongoDatabasesScrollPane.setFitToHeight(true);
+        mongoDatabasesScrollPane.setContent(databases);
     }
 
     @FXML
