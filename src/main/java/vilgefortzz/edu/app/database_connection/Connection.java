@@ -14,7 +14,6 @@ public abstract class Connection implements Connector {
     protected boolean connectedToServer;
     protected boolean connectedToDatabase;
 
-    protected String dbName;
     protected ResultsFormatter resultsFormatter = new ResultsFormatter();
 
     private ProcessBuilder builder = new ProcessBuilder();
@@ -41,14 +40,6 @@ public abstract class Connection implements Connector {
 
     public void setConnectedToDatabase(boolean connectedToDatabase) {
         this.connectedToDatabase = connectedToDatabase;
-    }
-
-    public String getDbName() {
-        return dbName;
-    }
-
-    public void setDbName(String dbName) {
-        this.dbName = dbName;
     }
 
     public void clearQuery() {

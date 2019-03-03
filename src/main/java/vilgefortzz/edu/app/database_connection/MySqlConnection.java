@@ -15,18 +15,15 @@ public class MySqlConnection extends Connection {
     private java.sql.Connection jdbcConnection;
     private Statement statement;
 
+    private String dbName;
+
     @Override
     public boolean connectToServer() throws IOException, SQLException {
 
         String command1 = "service";
         String command2 = "mysql";
         String command3 = "start";
-        executeCommand(command1, command2, command3);
-
-        jdbcConnection = DriverManager.getConnection(url + useSSL, MYSQL_USER, MYSQL_PASSWORD);
-        statement = jdbcConnection.createStatement();
-
-        return statement != null;
+        return executeCommand(command1, command2, command3);
     }
 
     @Override
@@ -93,6 +90,14 @@ public class MySqlConnection extends Connection {
         }
 
         return null;
+    }
+
+    public String getDbName() {
+        return dbName;
+    }
+
+    public void setDbName(String dbName) {
+        this.dbName = dbName;
     }
 
     @Override
