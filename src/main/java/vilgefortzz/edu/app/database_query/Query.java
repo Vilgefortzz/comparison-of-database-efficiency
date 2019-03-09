@@ -2,9 +2,9 @@ package vilgefortzz.edu.app.database_query;
 
 public abstract class Query implements Transformation {
 
-    private String query;
-    private String type;
-    private Long time;
+    protected String query;
+    protected String type;
+    protected Long time;
 
     public Query(String query) {
         this.query = query;

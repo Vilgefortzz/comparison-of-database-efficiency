@@ -213,18 +213,14 @@ public class Controller implements Initializable {
     public void query() throws SQLException, IOException {
 
         String query = queryTextArea.getText();
+        TableView results = null;
 
         if (mysqlRadioButton.isSelected()) {
 
-            Connection mysql = connections.get("mysql");
+            MySqlConnection mysql = (MySqlConnection) connections.get("mysql");
             mysql.setQuery(new MySqlQuery(query));
 
-            TableView results = mysql.query();
-
-            // Set results
-            queryResultsScrollPane.setFitToWidth(true);
-            queryResultsScrollPane.setFitToHeight(true);
-            queryResultsScrollPane.setContent(results);
+            results = mysql.query();
 
             // Set query time
             long queryTimeInNs = mysql.getQuery().getTime();
@@ -233,15 +229,21 @@ public class Controller implements Initializable {
 
         } else if (mongodbRadioButton.isSelected()) {
 
-            Connection mongodb = connections.get("mongodb");
+            MongoDbConnection mongodb = (MongoDbConnection) connections.get("mongodb");
             mongodb.setQuery(new MongoDbQuery(query));
-            mongodb.getQuery().transformToMongoDb();
+            results = mongodb.query();
+
         } else {
 
-            Connection associativeNetwork = connections.get("associativeNetwork");
+            AssociativeNetworkConnection associativeNetwork = (AssociativeNetworkConnection) connections.get("associativeNetwork");
             associativeNetwork.setQuery(new AssociativeNetworkQuery(query));
             associativeNetwork.getQuery().transformToAssociativeNetwork();
         }
+
+        // Set results
+        queryResultsScrollPane.setFitToWidth(true);
+        queryResultsScrollPane.setFitToHeight(true);
+        queryResultsScrollPane.setContent(results);
     }
 
     @FXML

@@ -7,11 +7,6 @@ public class MySqlQuery extends Query {
     }
 
     @Override
-    public void transformToMongoDb() {
-
-    }
-
-    @Override
     public void transformToAssociativeNetwork() {
 
     }

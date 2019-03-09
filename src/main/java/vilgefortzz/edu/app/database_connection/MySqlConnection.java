@@ -1,6 +1,7 @@
 package vilgefortzz.edu.app.database_connection;
 
 import javafx.scene.control.TableView;
+import vilgefortzz.edu.app.database_query.MySqlQuery;
 
 import java.io.IOException;
 import java.sql.*;
@@ -16,6 +17,7 @@ public class MySqlConnection extends Connection {
     private Statement statement;
 
     private String dbName;
+    private MySqlQuery query;
 
     @Override
     public boolean connectToServer() throws IOException, SQLException {
@@ -98,6 +100,18 @@ public class MySqlConnection extends Connection {
 
     public void setDbName(String dbName) {
         this.dbName = dbName;
+    }
+
+    public MySqlQuery getQuery() {
+        return query;
+    }
+
+    public void setQuery(MySqlQuery query) {
+        this.query = query;
+    }
+
+    public void clearQuery() {
+        query = null;
     }
 
     @Override
