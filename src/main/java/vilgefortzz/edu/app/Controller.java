@@ -231,7 +231,13 @@ public class Controller implements Initializable {
 
             MongoDbConnection mongodb = (MongoDbConnection) connections.get("mongodb");
             mongodb.setQuery(new MongoDbQuery(query));
+
             results = mongodb.query();
+
+            // Set query time
+            long queryTimeInNs = mongodb.getQuery().getTime();
+            long queryTimeInMs = queryTimeInNs / 1000;
+            queryTimeLabel.setText(queryTimeInMs + " ms\n" + queryTimeInNs + " ns");
 
         } else {
 

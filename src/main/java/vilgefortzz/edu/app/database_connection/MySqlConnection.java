@@ -88,7 +88,7 @@ public class MySqlConnection extends Connection {
 
             query.setTime(endQuery - startQuery);
 
-            return resultsFormatter.prepareResultsForTable(resultSet);
+            return resultsFormatter.prepareResultsForMySql(resultSet);
         }
 
         return null;

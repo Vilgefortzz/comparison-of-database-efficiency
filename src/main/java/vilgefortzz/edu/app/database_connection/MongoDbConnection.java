@@ -13,7 +13,6 @@ import org.jongo.MongoCursor;
 import vilgefortzz.edu.app.database_query.MongoDbQuery;
 
 import java.io.IOException;
-import java.sql.ResultSet;
 
 import static vilgefortzz.edu.app.database_configuration.Configuration.MONGODB_HOST;
 import static vilgefortzz.edu.app.database_configuration.Configuration.MONGODB_PORT;
@@ -88,18 +87,22 @@ public class MongoDbConnection extends Connection {
             MongoCollection collection = jongo.getCollection(query.getCollectionName());
             MongoCursor<org.bson.Document> documents;
 
+            long startQuery, endQuery;
+
             if (query.getProjectionQuery().equals(findAll)) {
+                startQuery = System.nanoTime();
                 documents = collection.find(query.getFindQuery()).as(Document.class);
+                endQuery = System.nanoTime();
             } else {
+                startQuery = System.nanoTime();
                 documents = collection.find(query.getFindQuery())
                         .projection(query.getProjectionQuery()).as(Document.class);
+                endQuery = System.nanoTime();
             }
 
-            for (Document document : documents) {
-                System.out.println(document.toJson());
-            }
+            query.setTime(endQuery - startQuery);
 
-            return null;
+            return resultsFormatter.prepareResultsForMongoDb(documents);
         }
 
         return null;
