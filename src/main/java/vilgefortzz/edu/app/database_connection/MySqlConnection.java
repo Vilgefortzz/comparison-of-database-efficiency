@@ -5,6 +5,8 @@ import vilgefortzz.edu.app.database_query.MySqlQuery;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static vilgefortzz.edu.app.database_configuration.Configuration.*;
 
@@ -73,6 +75,43 @@ public class MySqlConnection extends Connection {
         statement = jdbcConnection.createStatement();
         String query = "CREATE DATABASE IF NOT EXISTS " + dbName + ";";
         return statement.executeUpdate(query) > 0;
+    }
+
+    public List<String> getTables(String dbName) throws SQLException {
+
+        jdbcConnection = DriverManager.getConnection(url + dbName + useSSL, MYSQL_USER, MYSQL_PASSWORD);
+        statement = jdbcConnection.createStatement();
+
+        List<String> tables = new ArrayList<>();
+
+        DatabaseMetaData meta = jdbcConnection.getMetaData();
+        ResultSet resultSet = meta.getTables(null, null,
+                null, new String[] { "TABLE" });
+        while (resultSet.next()) {
+            tables.add(resultSet.getString("TABLE_NAME"));
+        }
+
+        return tables;
+    }
+
+    public List<String> getColumns(String dbName, String tableName) throws SQLException {
+
+        jdbcConnection = DriverManager.getConnection(url + dbName + useSSL, MYSQL_USER, MYSQL_PASSWORD);
+        statement = jdbcConnection.createStatement();
+
+        String query = "SELECT * FROM " + tableName + ";";
+        ResultSet resultSet = statement.executeQuery(query);
+
+        List<String> columns = new ArrayList<>();
+
+        ResultSetMetaData metaData = resultSet.getMetaData();
+        int numberOfColumns = metaData.getColumnCount();
+
+        for (int i = 0; i < numberOfColumns; i++) {
+            columns.add(metaData.getColumnLabel(i+1));
+        }
+
+        return columns;
     }
 
     @Override

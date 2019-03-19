@@ -60,7 +60,7 @@
                   <Font name="Lato Bold" size="13.0" />
                </font>
             </Label>
-            <Button fx:id="sqlToMysqlImportButton" layoutX="65.0" layoutY="95.0" mnemonicParsing="false" onAction="#importFromSqlToMysql" text="Import">
+            <Button fx:id="importDatabaseButton" layoutX="119.0" layoutY="95.0" mnemonicParsing="false" onAction="#importDatabase" text="Import">
                <font>
                   <Font name="Lato Regular" size="13.0" />
                </font></Button>
@@ -69,51 +69,43 @@
                   <Font name="Lato Bold" size="13.0" />
                </font>
             </Label>
-            <Label layoutX="299.0" layoutY="55.0" text="-&gt;">
+            <Label layoutX="189.0" layoutY="54.0" text="-&gt;">
                <font>
                   <Font name="Lato Bold" size="13.0" />
                </font>
             </Label>
-            <Button fx:id="mysqlToMongodbImportButton" layoutX="277.0" layoutY="95.0" mnemonicParsing="false" text="Import">
-               <font>
-                  <Font name="Lato Regular" size="13.0" />
-               </font></Button>
             <ImageView fitHeight="51.0" fitWidth="83.0" layoutX="106.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/mysql.png" />
                </image></ImageView>
-            <ImageView fitHeight="51.0" fitWidth="83.0" layoutX="216.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/mysql.png" />
-               </image></ImageView>
-            <ImageView fitHeight="90.0" fitWidth="90.0" layoutX="312.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="90.0" fitWidth="90.0" layoutX="201.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/mongodb.png" />
                </image></ImageView>
-            <Button fx:id="sqlToAssociativeNetworkGenerateButton" layoutX="451.0" layoutY="95.0" mnemonicParsing="false" text="Generate">
+            <Button fx:id="sqlToAssociativeNetworkGenerateButton" layoutX="387.0" layoutY="95.0" mnemonicParsing="false" text="Generate">
                <font>
                   <Font name="Lato Regular" size="13.0" />
                </font></Button>
-            <ImageView fitHeight="65.0" fitWidth="61.0" layoutX="407.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="65.0" fitWidth="61.0" layoutX="350.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/pure_sql.png" />
                </image></ImageView>
-            <ImageView fitHeight="65.0" fitWidth="61.0" layoutX="500.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="65.0" fitWidth="61.0" layoutX="437.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/associative_network.png" />
                </image></ImageView>
-            <Label layoutX="481.0" layoutY="55.0" text="-&gt;">
+            <Label layoutX="417.0" layoutY="54.0" text="-&gt;">
                <font>
                   <Font name="Lato Bold" size="13.0" />
                </font>
             </Label>
-            <Separator layoutX="392.0" layoutY="13.0" orientation="VERTICAL" prefHeight="135.0" prefWidth="5.0" />
-            <Label layoutX="567.0" layoutY="23.0" text="Generation time:">
+            <Separator layoutX="319.0" layoutY="6.0" orientation="VERTICAL" prefHeight="135.0" prefWidth="5.0" />
+            <Label layoutX="536.0" layoutY="56.0" text="Generation time:">
                <font>
                   <Font name="Lato Bold Italic" size="13.0" />
                </font>
             </Label>
-            <Label fx:id="generationTimeLabel" layoutX="668.0" layoutY="21.0" text="...">
+            <Label fx:id="generationTimeLabel" layoutX="649.0" layoutY="53.0" text="...">
                <font>
                   <Font size="18.0" />
                </font>

@@ -77,6 +77,10 @@ public class MongoDbConnection extends Connection {
         return databases;
     }
 
+    public boolean createDatabase(String dbName) {
+        return connectToDatabase(dbName);
+    }
+
     @Override
     public TableView query() {
 
