@@ -50,9 +50,7 @@ public class Controller implements Initializable {
      * Database manager
      */
     @FXML
-    private Button sqlToMysqlImportButton;
-    @FXML
-    private Button mysqlToMongodbImportButton;
+    private Button importDatabaseButton;
     @FXML
     private Button sqlToAssociativeNetworkGenerateButton;
 
@@ -187,7 +185,7 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    public void importFromSqlToMysql() throws IOException, SQLException {
+    public void importDatabase() throws IOException, SQLException {
 
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Import from SQL to MySQL");
@@ -202,7 +200,10 @@ public class Controller implements Initializable {
                 String dbName = dbFile.split("\\.")[0].
                         replaceAll("[^a-zA-Z0-9]", "");
                 MySqlConnection mysql = (MySqlConnection) connections.get("mysql");
-                importManager.importToMysql(mysql, dbFile, dbName);
+                MongoDbConnection mongodb = (MongoDbConnection) connections.get("mongodb");
+                if (importManager.importDatabase(mysql, mongodb, dbFile, dbName)) {
+                    System.out.println("Database successfully imported!");
+                }
             } else {
                 System.out.println("You can only import sql files!");
             }
