@@ -108,8 +108,6 @@ public class ResultsFormatter {
                 Gson gson = new Gson();
                 JsonObject jsonObject = gson.fromJson(jsonDocument, JsonObject.class);
 
-                System.out.println(jsonDocument);
-
                 JsonElement jsonElement = jsonObject.get(column);
                 while (jsonElement != null && jsonElement.isJsonObject()) {
                     if (column.equals(id)) {
