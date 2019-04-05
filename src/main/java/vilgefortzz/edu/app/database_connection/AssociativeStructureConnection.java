@@ -1,13 +1,13 @@
 package vilgefortzz.edu.app.database_connection;
 
 import javafx.scene.control.TableView;
-import vilgefortzz.edu.app.database_query.AssociativeNetworkQuery;
+import vilgefortzz.edu.app.database_query.AssociativeStructureQuery;
 
 import java.io.IOException;
 
-public class AssociativeNetworkConnection extends Connection {
+public class AssociativeStructureConnection extends Connection {
 
-    private AssociativeNetworkQuery query;
+    private AssociativeStructureQuery query;
 
     @Override
     public boolean connectToServer() {
@@ -34,11 +34,11 @@ public class AssociativeNetworkConnection extends Connection {
         return null;
     }
 
-    public AssociativeNetworkQuery getQuery() {
+    public AssociativeStructureQuery getQuery() {
         return query;
     }
 
-    public void setQuery(AssociativeNetworkQuery query) {
+    public void setQuery(AssociativeStructureQuery query) {
         this.query = query;
     }
 
@@ -48,6 +48,6 @@ public class AssociativeNetworkConnection extends Connection {
 
     @Override
     public String toString() {
-        return "AssociativeNetworkConnection";
+        return "AssociativeStructureConnection";
     }
 }

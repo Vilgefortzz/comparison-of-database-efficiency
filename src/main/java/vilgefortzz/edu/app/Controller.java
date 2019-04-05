@@ -8,12 +8,12 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import vilgefortzz.edu.app.database_connection.AssociativeNetworkConnection;
+import vilgefortzz.edu.app.database_connection.AssociativeStructureConnection;
 import vilgefortzz.edu.app.database_connection.Connection;
 import vilgefortzz.edu.app.database_connection.MongoDbConnection;
 import vilgefortzz.edu.app.database_connection.MySqlConnection;
 import vilgefortzz.edu.app.database_manager.ImportManager;
-import vilgefortzz.edu.app.database_query.AssociativeNetworkQuery;
+import vilgefortzz.edu.app.database_query.AssociativeStructureQuery;
 import vilgefortzz.edu.app.database_query.MongoDbQuery;
 import vilgefortzz.edu.app.database_query.MySqlQuery;
 
@@ -44,7 +44,7 @@ public class Controller implements Initializable {
     @FXML
     private ToggleButton mongodbConnectorToggleButton;
     @FXML
-    private Circle associativeNetworkConnectorCircle;
+    private Circle associativeStructureConnectorCircle;
 
     /**
      * Database manager
@@ -52,7 +52,7 @@ public class Controller implements Initializable {
     @FXML
     private Button importDatabaseButton;
     @FXML
-    private Button sqlToAssociativeNetworkGenerateButton;
+    private Button mysqlToAssociativeStructureGenerateButton;
 
     @FXML
     private Label generationTimeLabel;
@@ -72,7 +72,7 @@ public class Controller implements Initializable {
     @FXML
     private RadioButton mongodbRadioButton;
     @FXML
-    private RadioButton associativeNetworkRadioButton;
+    private RadioButton associativeStructureRadioButton;
 
     /**
      * Database chooser
@@ -211,6 +211,12 @@ public class Controller implements Initializable {
     }
 
     @FXML
+    public void generateAgds() throws IOException, SQLException {
+
+
+    }
+
+    @FXML
     public void query() throws SQLException, IOException {
 
         String query = queryTextArea.getText();
@@ -242,9 +248,9 @@ public class Controller implements Initializable {
 
         } else {
 
-            AssociativeNetworkConnection associativeNetwork = (AssociativeNetworkConnection) connections.get("associativeNetwork");
-            associativeNetwork.setQuery(new AssociativeNetworkQuery(query));
-            associativeNetwork.getQuery().transformToAssociativeNetwork();
+            AssociativeStructureConnection associativeStructure = (AssociativeStructureConnection) connections.get("associativeStructure");
+            associativeStructure.setQuery(new AssociativeStructureQuery(query));
+            associativeStructure.getQuery().transformToAssociativeStructure();
         }
 
         // Set results
@@ -264,14 +270,14 @@ public class Controller implements Initializable {
         mysqlRadioButton.setSelected(true);
 
         mongodbRadioButton.setToggleGroup(dbConnection);
-        associativeNetworkRadioButton.setToggleGroup(dbConnection);
+        associativeStructureRadioButton.setToggleGroup(dbConnection);
     }
 
     private void initializeConnections() {
 
         connections.put("mysql", new MySqlConnection());
         connections.put("mongodb", new MongoDbConnection());
-        connections.put("associativeNetwork", new AssociativeNetworkConnection());
+        connections.put("associativeStructure", new AssociativeStructureConnection());
     }
 
     private void connectToServer(Connection connection, ToggleButton connectionToggleButton) throws IOException, InterruptedException, SQLException {

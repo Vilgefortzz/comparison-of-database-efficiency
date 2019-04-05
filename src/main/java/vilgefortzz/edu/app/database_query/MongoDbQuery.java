@@ -43,7 +43,7 @@ public class MongoDbQuery extends Query {
     }
 
     @Override
-    public void transformToAssociativeNetwork() {
+    public void transformToAssociativeStructure() {
 
     }
 

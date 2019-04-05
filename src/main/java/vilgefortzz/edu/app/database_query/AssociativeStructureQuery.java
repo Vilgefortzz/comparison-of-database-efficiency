@@ -1,8 +1,8 @@
 package vilgefortzz.edu.app.database_query;
 
-public class MySqlQuery extends Query {
+public class AssociativeStructureQuery extends Query {
 
-    public MySqlQuery(String query) {
+    public AssociativeStructureQuery(String query) {
         super(query);
     }
 
@@ -13,6 +13,6 @@ public class MySqlQuery extends Query {
 
     @Override
     public String toString() {
-        return "MySqlQuery";
+        return "AssociativeStructureQuery";
     }
 }

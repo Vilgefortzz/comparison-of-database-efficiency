@@ -48,10 +48,10 @@
             </ToggleButton>
             <ImageView fitHeight="80.0" fitWidth="83.0" layoutX="507.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@images/associative_network.png" />
+                  <Image url="@images/associative_structure.png" />
                </image>
             </ImageView>
-            <Circle fx:id="associativeNetworkConnectorCircle" fill="#e1400a" layoutX="611.0" layoutY="103.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="associativeStructureConnectorCircle" fill="#e1400a" layoutX="611.0" layoutY="103.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
          </children></Pane>
       <Pane prefHeight="200.0" prefWidth="200.0">
          <children>
@@ -82,7 +82,7 @@
                <image>
                   <Image url="@images/mongodb.png" />
                </image></ImageView>
-            <Button fx:id="sqlToAssociativeNetworkGenerateButton" layoutX="387.0" layoutY="95.0" mnemonicParsing="false" text="Generate">
+            <Button fx:id="mysqlToAssociativeStructureGenerateButton" layoutX="387.0" layoutY="95.0" mnemonicParsing="false" onAction="#generateAgds" text="Generate">
                <font>
                   <Font name="Lato Regular" size="13.0" />
                </font></Button>
@@ -92,7 +92,7 @@
                </image></ImageView>
             <ImageView fitHeight="65.0" fitWidth="61.0" layoutX="437.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@images/associative_network.png" />
+                  <Image url="@images/associative_structure.png" />
                </image></ImageView>
             <Label layoutX="417.0" layoutY="54.0" text="-&gt;">
                <font>
@@ -143,7 +143,7 @@
                <font>
                   <Font name="Lato Regular" size="13.0" />
                </font></RadioButton>
-            <RadioButton fx:id="associativeNetworkRadioButton" layoutX="182.0" layoutY="205.0" mnemonicParsing="false" text="Associative network">
+            <RadioButton fx:id="associativeStructureRadioButton" layoutX="182.0" layoutY="205.0" mnemonicParsing="false" text="AGDS">
                <font>
                   <Font name="Lato Regular" size="13.0" />
                </font></RadioButton>
