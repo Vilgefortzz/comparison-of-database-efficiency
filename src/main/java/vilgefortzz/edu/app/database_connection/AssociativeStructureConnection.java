@@ -1,6 +1,7 @@
 package vilgefortzz.edu.app.database_connection;
 
 import javafx.scene.control.TableView;
+import vilgefortzz.edu.app.associative_structure.Agds;
 import vilgefortzz.edu.app.database_query.AssociativeStructureQuery;
 
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.io.IOException;
 public class AssociativeStructureConnection extends Connection {
 
     private AssociativeStructureQuery query;
+    private Agds agds;
 
     @Override
     public boolean connectToServer() {
@@ -44,6 +46,14 @@ public class AssociativeStructureConnection extends Connection {
 
     public void clearQuery() {
         query = null;
+    }
+
+    public Agds getAgds() {
+        return agds;
+    }
+
+    public void setAgds(Agds agds) {
+        this.agds = agds;
     }
 
     @Override
