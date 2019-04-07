@@ -213,6 +213,21 @@ public class Controller implements Initializable {
     @FXML
     public void generateAgds() throws IOException, SQLException {
 
+        MySqlConnection mysql = (MySqlConnection) connections.get("mysql");
+        AssociativeStructureConnection associativeStructure =
+                (AssociativeStructureConnection) connections.get("associativeStructure");
+
+        associativeStructure.generateAgds(mysql);
+
+        if (associativeStructure.getAgds().isGenerated()) {
+
+            associativeStructureConnectorCircle.setFill(Color.GREEN);
+
+            // Set generation time
+            long generationTimeInMs = associativeStructure.getAgds().getGenerationTime();
+            long generationTimeInS = generationTimeInMs / 1000;
+            generationTimeLabel.setText(generationTimeInS + " s\n" + generationTimeInMs + " ms");
+        }
 
     }
 
@@ -220,7 +235,7 @@ public class Controller implements Initializable {
     public void query() throws SQLException, IOException {
 
         String query = queryTextArea.getText();
-        TableView results = null;
+        TableView results;
 
         if (mysqlRadioButton.isSelected()) {
 
@@ -248,9 +263,16 @@ public class Controller implements Initializable {
 
         } else {
 
-            AssociativeStructureConnection associativeStructure = (AssociativeStructureConnection) connections.get("associativeStructure");
+            AssociativeStructureConnection associativeStructure =
+                    (AssociativeStructureConnection) connections.get("associativeStructure");
             associativeStructure.setQuery(new AssociativeStructureQuery(query));
-            associativeStructure.getQuery().transformToAssociativeStructure();
+
+            results = associativeStructure.query();
+
+            // Set query time
+            long queryTimeInNs = associativeStructure.getQuery().getTime();
+            long queryTimeInMs = queryTimeInNs / 1000;
+            queryTimeLabel.setText(queryTimeInMs + " ms\n" + queryTimeInNs + " ns");
         }
 
         // Set results

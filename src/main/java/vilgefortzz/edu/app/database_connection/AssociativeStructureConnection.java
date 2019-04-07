@@ -5,6 +5,7 @@ import vilgefortzz.edu.app.associative_structure.Agds;
 import vilgefortzz.edu.app.database_query.AssociativeStructureQuery;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class AssociativeStructureConnection extends Connection {
 
@@ -34,6 +35,10 @@ public class AssociativeStructureConnection extends Connection {
     @Override
     public TableView query() {
         return null;
+    }
+
+    public void generateAgds(MySqlConnection mysql) throws SQLException {
+        agds = new Agds(mysql);
     }
 
     public AssociativeStructureQuery getQuery() {
