@@ -2,6 +2,7 @@ package vilgefortzz.edu.app.database_connection;
 
 import javafx.scene.control.TableView;
 import vilgefortzz.edu.app.database_query.MySqlQuery;
+import vilgefortzz.edu.app.database_results.Record;
 
 import java.io.IOException;
 import java.sql.*;
@@ -112,6 +113,31 @@ public class MySqlConnection extends Connection {
         }
 
         return columns;
+    }
+
+    public List<Record> getRecords(String dbName, String tableName) throws SQLException {
+
+        jdbcConnection = DriverManager.getConnection(url + dbName + useSSL, MYSQL_USER, MYSQL_PASSWORD);
+        statement = jdbcConnection.createStatement();
+
+        String query = "SELECT * FROM " + tableName + ";";
+        ResultSet resultSet = statement.executeQuery(query);
+
+        ResultSetMetaData metaData = resultSet.getMetaData();
+        int numberOfColumns = metaData.getColumnCount();
+
+        List<Record> records = new ArrayList<>();
+        resultSet.next();
+
+        do {
+            Record record = new Record();
+            for (int i = 1; i <= numberOfColumns; i++) {
+                record.addValue(metaData.getColumnLabel(i), String.valueOf(resultSet.getObject(i)));
+            }
+            records.add(record);
+        } while (resultSet.next());
+
+        return records;
     }
 
     @Override
