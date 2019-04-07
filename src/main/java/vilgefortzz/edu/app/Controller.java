@@ -245,9 +245,9 @@ public class Controller implements Initializable {
             results = mysql.query();
 
             // Set query time
-            long queryTimeInNs = mysql.getQuery().getTime();
-            long queryTimeInMs = queryTimeInNs / 1000;
-            queryTimeLabel.setText(queryTimeInMs + " ms\n" + queryTimeInNs + " ns");
+            long queryTimeInMs = mysql.getQuery().getTime();
+            long queryTimeInS = queryTimeInMs / 1000;
+            queryTimeLabel.setText(queryTimeInS + " s\n" + queryTimeInMs + " ms");
 
         } else if (mongodbRadioButton.isSelected()) {
 
@@ -257,9 +257,9 @@ public class Controller implements Initializable {
             results = mongodb.query();
 
             // Set query time
-            long queryTimeInNs = mongodb.getQuery().getTime();
-            long queryTimeInMs = queryTimeInNs / 1000;
-            queryTimeLabel.setText(queryTimeInMs + " ms\n" + queryTimeInNs + " ns");
+            long queryTimeInMs = mongodb.getQuery().getTime();
+            long queryTimeInS = queryTimeInMs / 1000;
+            queryTimeLabel.setText(queryTimeInS + " s\n" + queryTimeInMs + " ms");
 
         } else {
 
@@ -270,9 +270,9 @@ public class Controller implements Initializable {
             results = associativeStructure.query();
 
             // Set query time
-            long queryTimeInNs = associativeStructure.getQuery().getTime();
-            long queryTimeInMs = queryTimeInNs / 1000;
-            queryTimeLabel.setText(queryTimeInMs + " ms\n" + queryTimeInNs + " ns");
+            long queryTimeInMs = associativeStructure.getQuery().getTime();
+            long queryTimeInS = queryTimeInMs / 1000;
+            queryTimeLabel.setText(queryTimeInS + " s\n" + queryTimeInMs + " ms");
         }
 
         // Set results

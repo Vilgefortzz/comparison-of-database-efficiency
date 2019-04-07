@@ -94,14 +94,14 @@ public class MongoDbConnection extends Connection {
             long startQuery, endQuery;
 
             if (query.getProjectionQuery().equals(findAll)) {
-                startQuery = System.nanoTime();
+                startQuery = System.currentTimeMillis();
                 documents = collection.find(query.getFindQuery()).as(Document.class);
-                endQuery = System.nanoTime();
+                endQuery = System.currentTimeMillis();
             } else {
-                startQuery = System.nanoTime();
+                startQuery = System.currentTimeMillis();
                 documents = collection.find(query.getFindQuery())
                         .projection(query.getProjectionQuery()).as(Document.class);
-                endQuery = System.nanoTime();
+                endQuery = System.currentTimeMillis();
             }
 
             query.setTime(endQuery - startQuery);

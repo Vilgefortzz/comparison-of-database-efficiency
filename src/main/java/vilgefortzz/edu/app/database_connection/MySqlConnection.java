@@ -147,9 +147,9 @@ public class MySqlConnection extends Connection {
             jdbcConnection = DriverManager.getConnection(url + dbName + useSSL, MYSQL_USER, MYSQL_PASSWORD);
             statement = jdbcConnection.createStatement();
 
-            long startQuery = System.nanoTime();
+            long startQuery = System.currentTimeMillis();
             ResultSet resultSet = statement.executeQuery(query.getQuery());
-            long endQuery = System.nanoTime();
+            long endQuery = System.currentTimeMillis();
 
             query.setTime(endQuery - startQuery);
 
