@@ -82,30 +82,30 @@
                <image>
                   <Image url="@images/mongodb.png" />
                </image></ImageView>
-            <Button fx:id="mysqlToAssociativeStructureGenerateButton" layoutX="387.0" layoutY="95.0" mnemonicParsing="false" onAction="#generateAgds" text="Generate">
+            <Button fx:id="mysqlToAssociativeStructureGenerateButton" layoutX="377.0" layoutY="95.0" mnemonicParsing="false" onAction="#generateAgds" text="Generate">
                <font>
                   <Font name="Lato Regular" size="13.0" />
                </font></Button>
-            <ImageView fitHeight="65.0" fitWidth="61.0" layoutX="350.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="65.0" fitWidth="61.0" layoutX="339.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/pure_sql.png" />
                </image></ImageView>
-            <ImageView fitHeight="65.0" fitWidth="61.0" layoutX="437.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="65.0" fitWidth="61.0" layoutX="427.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/associative_structure.png" />
                </image></ImageView>
-            <Label layoutX="417.0" layoutY="54.0" text="-&gt;">
+            <Label layoutX="407.0" layoutY="53.0" text="-&gt;">
                <font>
                   <Font name="Lato Bold" size="13.0" />
                </font>
             </Label>
             <Separator layoutX="319.0" layoutY="6.0" orientation="VERTICAL" prefHeight="135.0" prefWidth="5.0" />
-            <Label layoutX="536.0" layoutY="56.0" text="Generation time:">
+            <Label layoutX="537.0" layoutY="23.0" text="Generation time:">
                <font>
                   <Font name="Lato Bold Italic" size="13.0" />
                </font>
             </Label>
-            <Label fx:id="generationTimeLabel" layoutX="649.0" layoutY="53.0" text="...">
+            <Label fx:id="generationTimeLabel" alignment="CENTER" contentDisplay="TOP" layoutX="522.0" layoutY="38.0" prefHeight="72.0" prefWidth="122.0" text="..." textAlignment="CENTER">
                <font>
                   <Font size="18.0" />
                </font>
