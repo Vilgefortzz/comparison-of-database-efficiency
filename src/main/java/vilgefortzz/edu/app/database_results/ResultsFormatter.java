@@ -23,6 +23,7 @@ public class ResultsFormatter {
 
     private final static String id = "_id";
     private final static String objectId = "$oid";
+    private final static int recordsAmount = 1000;
 
     public TableView<ObservableList<String>> prepareResultsForMySql(ResultSet resultSet) throws SQLException {
 
@@ -42,6 +43,7 @@ public class ResultsFormatter {
 
     private ArrayList<Row> createRowsForMysql(ResultSet resultSet) throws SQLException {
 
+        int recordsCounter = 0;
         ResultSetMetaData metaData = resultSet.getMetaData();
         int numberOfColumns = metaData.getColumnCount();
 
@@ -53,7 +55,8 @@ public class ResultsFormatter {
                 row.addColumnValue(String.valueOf(resultSet.getObject(i)));
             }
             rows.add(row);
-        } while (resultSet.next());
+            recordsCounter++;
+        } while (resultSet.next() && recordsCounter < recordsAmount);
 
         return rows;
     }
@@ -101,10 +104,13 @@ public class ResultsFormatter {
 
     private ArrayList<Row> createRowsForMongoDb(MongoCursor<Document> documents) {
 
+        int recordsCounter = 0;
         ArrayList<Row> rows = new ArrayList<>();
 
         for (Document document: documents) {
+
             Row row = new Row();
+
             for (String column : document.keySet()) {
 
                 String jsonDocument = document.toJson();
@@ -126,7 +132,11 @@ public class ResultsFormatter {
 
                 row.addColumnValue(value);
             }
+
             rows.add(row);
+            recordsCounter++;
+
+            if (recordsCounter >= recordsAmount) break;
         }
 
         return rows;
@@ -169,10 +179,13 @@ public class ResultsFormatter {
 
     private ArrayList<Row> createRowsForAssociativeStructure(List<Record> records, AssociativeStructureQuery query) {
 
+        int recordsCounter = 0;
         ArrayList<Row> rows = new ArrayList<>();
 
         for (Record record: records) {
+
             Row row = new Row();
+
             if (query.isSelectedAll()) {
                 for (Map.Entry<String, String> column : record.getValues().entrySet()) {
                     row.addColumnValue(column.getValue());
@@ -182,7 +195,11 @@ public class ResultsFormatter {
                     row.addColumnValue(record.getColumnValue(columnName));
                 }
             }
+
             rows.add(row);
+            recordsCounter++;
+
+            if (recordsCounter >= recordsAmount) break;
         }
 
         return rows;

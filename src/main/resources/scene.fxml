@@ -227,7 +227,7 @@
             </Label>
             <ScrollPane fx:id="queryResultsScrollPane" layoutX="14.0" layoutY="37.0" prefHeight="128.0" prefWidth="469.0">
                <content>
-                  <Label fx:id="queryResultsLabel" alignment="TOP_LEFT" prefHeight="88.0" prefWidth="467.0" text="Query results...">
+                  <Label fx:id="queryResultsLabel" alignment="TOP_LEFT" prefHeight="88.0" prefWidth="467.0" text="Query results ( limit to 1000 records on view )...">
                      <font>
                         <Font name="Lato Regular" size="13.0" />
                      </font>
