@@ -132,7 +132,7 @@ public class MySqlConnection extends Connection {
         do {
             Record record = new Record();
             for (int i = 1; i <= numberOfColumns; i++) {
-                record.addValue(metaData.getColumnLabel(i), String.valueOf(resultSet.getObject(i)));
+                record.addColumnValue(metaData.getColumnLabel(i), String.valueOf(resultSet.getObject(i)));
             }
             records.add(record);
         } while (resultSet.next());

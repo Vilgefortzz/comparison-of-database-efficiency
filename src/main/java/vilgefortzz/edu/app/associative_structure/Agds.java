@@ -12,7 +12,7 @@ public class Agds {
 
     private Long generationTime;
     private boolean isGenerated;
-    private Map<String, AgdsAttribute> agdsAttributes = new HashMap<>();
+    public Map<String, AgdsAttribute> agdsAttributes = new HashMap<>();
 
     public Agds(MySqlConnection mysql) throws SQLException {
         generate(mysql);

@@ -7,11 +7,6 @@ public class MySqlQuery extends Query {
     }
 
     @Override
-    public void transformToAssociativeStructure() {
-
-    }
-
-    @Override
     public String toString() {
         return "MySqlQuery";
     }

@@ -1,6 +1,6 @@
 package vilgefortzz.edu.app.database_query;
 
-public abstract class Query implements Transformation {
+public abstract class Query {
 
     protected String query;
     protected String type;

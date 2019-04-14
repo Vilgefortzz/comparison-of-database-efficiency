@@ -42,11 +42,6 @@ public class MongoDbQuery extends Query {
         }
     }
 
-    @Override
-    public void transformToAssociativeStructure() {
-
-    }
-
     public String getCollectionName() {
         return collectionName;
     }

@@ -12,7 +12,7 @@ public class AgdsAttribute {
 
     private String name;
 
-    private Map<String, List<AgdsValue>> agdsValues = new HashMap<>();
+    public Map<String, List<AgdsValue>> agdsValues = new HashMap<>();
 
     public AgdsAttribute(String name, List<Record> records) throws SQLException {
 
@@ -24,7 +24,7 @@ public class AgdsAttribute {
 
         for (Record record : records) {
             if (record.getValues().containsKey(name)) {
-                String value = record.getValue(name);
+                String value = record.getColumnValue(name);
                 if (agdsValues.containsKey(value)) {
                     agdsValues.get(value).add(new AgdsValue(value, record));
                 } else {
