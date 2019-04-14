@@ -14,7 +14,7 @@ public class Row {
         this.columns = columns;
     }
 
-    public void addColumn(String columnName) {
-        columns.add(columnName);
+    public void addColumnValue(String columnValue) {
+        columns.add(columnValue);
     }
 }

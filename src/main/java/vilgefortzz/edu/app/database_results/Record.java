@@ -15,11 +15,11 @@ public class Record {
         this.values = values;
     }
 
-    public void addValue(String column, String value) {
-        values.put(column, value);
+    public void addColumnValue(String columnName, String value) {
+        values.put(columnName, value);
     }
 
-    public String getValue(String column) { return values.get(column); }
+    public String getColumnValue(String columnName) { return values.get(columnName); }
 
     @Override
     public String toString() {
