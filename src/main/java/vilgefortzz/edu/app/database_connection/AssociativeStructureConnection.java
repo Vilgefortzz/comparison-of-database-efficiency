@@ -46,23 +46,44 @@ public class AssociativeStructureConnection extends Connection {
             List<Record> records = new ArrayList<>();
 
             long startQuery = System.currentTimeMillis();
-            if (query.getConditions().isEmpty()) {
+            if (query.getCombinedConditions().isEmpty()) {
                 Map<String, AgdsAttribute> agdsAttributes = agds.agdsAttributes;
                 for (Map.Entry<String, AgdsAttribute> agdsAttribute : agdsAttributes.entrySet()) {
                     for (Map.Entry<String, List<AgdsValue>> agdsValueList : agdsAttribute.getValue().agdsValues.entrySet()) {
                         for (AgdsValue agdsValue : agdsValueList.getValue()) {
                             Record record = agdsValue.getRecord();
                             if (!records.contains(record)) {
-                                records.add(agdsValue.getRecord());
+                                records.add(record);
                             }
                         }
                     }
                 }
             } else {
-                AgdsAttribute agdsAttribute = agds.agdsAttributes.get(query.getConditions().entrySet().iterator().next().getKey());
-                List<AgdsValue> agdsValues = agdsAttribute.agdsValues.get(query.getConditions().entrySet().iterator().next().getValue());
-                for (AgdsValue agdsValue : agdsValues) {
-                    records.add(agdsValue.getRecord());
+
+                if (!query.getAndConditions().isEmpty()) {
+                    Map.Entry<String, List<String>> firstAndCondition =
+                            query.getAndConditions().entrySet().iterator().next();
+                    AgdsAttribute agdsAttribute = agds.agdsAttributes.get(firstAndCondition.getKey());
+                    for (String columnValue : firstAndCondition.getValue()) {
+                        List<AgdsValue> agdsValues = agdsAttribute.agdsValues.get(columnValue);
+                        for (AgdsValue agdsValue : agdsValues) {
+                            Record record = agdsValue.getRecord();
+                            if (record.checkConditions(query.getAndConditions())) {
+                                records.add(record);
+                            }
+                        }
+                    }
+                }
+                if (!query.getOrConditions().isEmpty()) {
+                    for (Map.Entry<String, List<String>> orCondition : query.getOrConditions().entrySet()) {
+                        AgdsAttribute agdsAttribute = agds.agdsAttributes.get(orCondition.getKey());
+                        for (String columnValue : orCondition.getValue()) {
+                            List<AgdsValue> agdsValues = agdsAttribute.agdsValues.get(columnValue);
+                            for (AgdsValue agdsValue : agdsValues) {
+                                records.add(agdsValue.getRecord());
+                            }
+                        }
+                    }
                 }
             }
             long endQuery = System.currentTimeMillis();

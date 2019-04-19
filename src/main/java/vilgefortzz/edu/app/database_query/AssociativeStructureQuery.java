@@ -11,7 +11,10 @@ public class AssociativeStructureQuery extends Query {
 
     private String tableName;
     private List<String> columns = new ArrayList<>();
-    private Map<String, String> conditions = new HashMap<>();
+    private Map<String, List<String>> andConditions = new HashMap<>();
+    private Map<String, List<String>> orConditions = new HashMap<>();
+    private Map<String, Map<String, List<String>>> combinedConditions = new HashMap<>();
+
     private boolean selectedAll;
 
     public AssociativeStructureQuery(String query) {
@@ -54,10 +57,60 @@ public class AssociativeStructureQuery extends Query {
 
         if (conditions != null && !conditions.isEmpty()) {
 
-            String column = conditions.split("=")[0];
-            String value = conditions.split("=")[1];
+            String[] combinedConditions = conditions.split(" ");
+            String combinedConditionType = null;
 
-            this.conditions.put(column, value);
+            for (String combinedCondition : combinedConditions) {
+
+                if (combinedCondition.contains("AND")) {
+                    combinedConditionType = "AND";
+                } else if (combinedCondition.contains("OR")) {
+                    combinedConditionType = "OR";
+                } else {
+
+                    String column = combinedCondition.split("=")[0];
+                    String value = combinedCondition.split("=")[1];
+
+                    if (combinedConditionType != null) {
+
+                        if (combinedConditionType.equals("AND")) {
+                            List<String> andConditionColumnValues = andConditions.get(column);
+                            setConditions(andConditionColumnValues, column, value, true);
+                        } else {
+                            List<String> orConditionColumnValues = orConditions.get(column);
+                            setConditions(orConditionColumnValues, column, value, false);
+                        }
+                    } else {
+                        List<String> newAndConditionColumnValues = new ArrayList<>();
+                        newAndConditionColumnValues.add(value);
+                        this.andConditions.put(column, newAndConditionColumnValues);
+                    }
+                }
+            }
+
+            this.combinedConditions.put("AND", andConditions);
+            this.combinedConditions.put("OR", orConditions);
+        }
+    }
+
+    private void setConditions(List<String> conditionColumnValues,
+                               String column, String value, boolean isAndCondition) {
+
+        if (conditionColumnValues != null) {
+            conditionColumnValues.add(value);
+            if (isAndCondition) {
+                this.andConditions.put(column, conditionColumnValues);
+            } else {
+                this.orConditions.put(column, conditionColumnValues);
+            }
+        } else {
+            List<String> newConditionColumnValues = new ArrayList<>();
+            newConditionColumnValues.add(value);
+            if (isAndCondition) {
+                this.andConditions.put(column, newConditionColumnValues);
+            } else {
+                this.orConditions.put(column, newConditionColumnValues);
+            }
         }
     }
 
@@ -77,12 +130,28 @@ public class AssociativeStructureQuery extends Query {
         this.columns = columns;
     }
 
-    public Map<String, String> getConditions() {
-        return conditions;
+    public Map<String, Map<String, List<String>>> getCombinedConditions() {
+        return combinedConditions;
     }
 
-    public void setConditions(Map<String, String> conditions) {
-        this.conditions = conditions;
+    public void setCombinedConditions(Map<String, Map<String, List<String>>> combinedConditions) {
+        this.combinedConditions = combinedConditions;
+    }
+
+    public Map<String, List<String>> getAndConditions() {
+        return andConditions;
+    }
+
+    public void setAndConditions(Map<String, List<String>> andConditions) {
+        this.andConditions = andConditions;
+    }
+
+    public Map<String, List<String>> getOrConditions() {
+        return orConditions;
+    }
+
+    public void setOrConditions(Map<String, List<String>> orConditions) {
+        this.orConditions = orConditions;
     }
 
     public boolean isSelectedAll() {

@@ -1,6 +1,7 @@
 package vilgefortzz.edu.app.database_results;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Record {
@@ -20,6 +21,19 @@ public class Record {
     }
 
     public String getColumnValue(String columnName) { return values.get(columnName); }
+
+    public boolean checkConditions(Map<String, List<String>> andConditions) {
+
+        for (Map.Entry<String, List<String>> andCondition : andConditions.entrySet()) {
+            for (String columnValue : andCondition.getValue()) {
+                if (!getColumnValue(andCondition.getKey()).equals(columnValue)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
 
     @Override
     public String toString() {
