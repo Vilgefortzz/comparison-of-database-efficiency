@@ -11,11 +11,22 @@ public class AssociativeStructureQuery extends Query {
 
     private String tableName;
     private List<String> columns = new ArrayList<>();
+
+    /**
+     * Usual logical conditions
+     */
     private Map<String, List<String>> andConditions = new HashMap<>();
     private Map<String, List<String>> orConditions = new HashMap<>();
-    private Map<String, Map<String, List<String>>> combinedConditions = new HashMap<>();
+
+    /**
+     * Grouped logical conditions
+     */
+    private Map<String, List<String>> groupedAndConditions = new HashMap<>();
+    private Map<String, List<String>> groupedOrConditions = new HashMap<>();
+    private String groupedConditionType = null;
 
     private boolean selectedAll;
+    private boolean conditions;
 
     public AssociativeStructureQuery(String query) {
 
@@ -57,8 +68,10 @@ public class AssociativeStructureQuery extends Query {
 
         if (conditions != null && !conditions.isEmpty()) {
 
+            this.conditions = true;
             String[] combinedConditions = conditions.split(" ");
             String combinedConditionType = null;
+            boolean isGroup = false;
 
             for (String combinedCondition : combinedConditions) {
 
@@ -66,6 +79,11 @@ public class AssociativeStructureQuery extends Query {
                     combinedConditionType = "AND";
                 } else if (combinedCondition.contains("OR")) {
                     combinedConditionType = "OR";
+                } else if (combinedCondition.contains("(")) {
+                    groupedConditionType = combinedConditionType;
+                    isGroup = true;
+                } else if (combinedCondition.contains(")")) {
+                    isGroup = false;
                 } else {
 
                     String column = combinedCondition.split("=")[0];
@@ -74,11 +92,21 @@ public class AssociativeStructureQuery extends Query {
                     if (combinedConditionType != null) {
 
                         if (combinedConditionType.equals("AND")) {
-                            List<String> andConditionColumnValues = andConditions.get(column);
-                            setConditions(andConditionColumnValues, column, value, true);
+                            List<String> andConditionColumnValues;
+                            if (isGroup) {
+                                andConditionColumnValues = groupedAndConditions.get(column);
+                            } else {
+                                andConditionColumnValues = andConditions.get(column);
+                            }
+                            setConditions(andConditionColumnValues, column, value, true, isGroup);
                         } else {
-                            List<String> orConditionColumnValues = orConditions.get(column);
-                            setConditions(orConditionColumnValues, column, value, false);
+                            List<String> orConditionColumnValues;
+                            if (isGroup) {
+                                orConditionColumnValues = groupedOrConditions.get(column);
+                            } else {
+                                orConditionColumnValues = orConditions.get(column);
+                            }
+                            setConditions(orConditionColumnValues, column, value, false, isGroup);
                         }
                     } else {
                         List<String> newAndConditionColumnValues = new ArrayList<>();
@@ -87,29 +115,36 @@ public class AssociativeStructureQuery extends Query {
                     }
                 }
             }
-
-            this.combinedConditions.put("AND", andConditions);
-            this.combinedConditions.put("OR", orConditions);
         }
     }
 
-    private void setConditions(List<String> conditionColumnValues,
-                               String column, String value, boolean isAndCondition) {
+    private void setConditions(List<String> conditionColumnValues, String column,
+                               String value, boolean isAndCondition, boolean isGroup) {
 
         if (conditionColumnValues != null) {
             conditionColumnValues.add(value);
+            groupConditions(conditionColumnValues, column, isAndCondition, isGroup);
+        } else {
+            List<String> newConditionColumnValues = new ArrayList<>();
+            newConditionColumnValues.add(value);
+            groupConditions(newConditionColumnValues, column, isAndCondition, isGroup);
+        }
+    }
+
+    private void groupConditions(List<String> conditionColumnValues, String column,
+                                 boolean isAndCondition, boolean isGroup) {
+
+        if (isGroup) {
+            if (isAndCondition) {
+                this.groupedAndConditions.put(column, conditionColumnValues);
+            } else {
+                this.groupedOrConditions.put(column, conditionColumnValues);
+            }
+        } else {
             if (isAndCondition) {
                 this.andConditions.put(column, conditionColumnValues);
             } else {
                 this.orConditions.put(column, conditionColumnValues);
-            }
-        } else {
-            List<String> newConditionColumnValues = new ArrayList<>();
-            newConditionColumnValues.add(value);
-            if (isAndCondition) {
-                this.andConditions.put(column, newConditionColumnValues);
-            } else {
-                this.orConditions.put(column, newConditionColumnValues);
             }
         }
     }
@@ -130,14 +165,6 @@ public class AssociativeStructureQuery extends Query {
         this.columns = columns;
     }
 
-    public Map<String, Map<String, List<String>>> getCombinedConditions() {
-        return combinedConditions;
-    }
-
-    public void setCombinedConditions(Map<String, Map<String, List<String>>> combinedConditions) {
-        this.combinedConditions = combinedConditions;
-    }
-
     public Map<String, List<String>> getAndConditions() {
         return andConditions;
     }
@@ -154,12 +181,44 @@ public class AssociativeStructureQuery extends Query {
         this.orConditions = orConditions;
     }
 
+    public Map<String, List<String>> getGroupedAndConditions() {
+        return groupedAndConditions;
+    }
+
+    public void setGroupedAndConditions(Map<String, List<String>> groupedAndConditions) {
+        this.groupedAndConditions = groupedAndConditions;
+    }
+
+    public Map<String, List<String>> getGroupedOrConditions() {
+        return groupedOrConditions;
+    }
+
+    public void setGroupedOrConditions(Map<String, List<String>> groupedOrConditions) {
+        this.groupedOrConditions = groupedOrConditions;
+    }
+
+    public String getGroupedConditionType() {
+        return groupedConditionType;
+    }
+
+    public void setGroupedConditionType(String groupedConditionType) {
+        this.groupedConditionType = groupedConditionType;
+    }
+
     public boolean isSelectedAll() {
         return selectedAll;
     }
 
     public void setSelectedAll(boolean selectedAll) {
         this.selectedAll = selectedAll;
+    }
+
+    public boolean areConditions() {
+        return conditions;
+    }
+
+    public void setConditions(boolean conditions) {
+        this.conditions = conditions;
     }
 
     @Override

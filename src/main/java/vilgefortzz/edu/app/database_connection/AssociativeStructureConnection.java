@@ -44,9 +44,9 @@ public class AssociativeStructureConnection extends Connection {
         if (agds.isGenerated()) {
 
             List<Record> records = new ArrayList<>();
-
             long startQuery = System.currentTimeMillis();
-            if (query.getCombinedConditions().isEmpty()) {
+
+            if (!query.areConditions()) {
                 Map<String, AgdsAttribute> agdsAttributes = agds.agdsAttributes;
                 for (Map.Entry<String, AgdsAttribute> agdsAttribute : agdsAttributes.entrySet()) {
                     for (Map.Entry<String, List<AgdsValue>> agdsValueList : agdsAttribute.getValue().agdsValues.entrySet()) {
@@ -61,19 +61,28 @@ public class AssociativeStructureConnection extends Connection {
             } else {
 
                 if (!query.getAndConditions().isEmpty()) {
-                    Map.Entry<String, List<String>> firstAndCondition =
-                            query.getAndConditions().entrySet().iterator().next();
-                    AgdsAttribute agdsAttribute = agds.agdsAttributes.get(firstAndCondition.getKey());
-                    for (String columnValue : firstAndCondition.getValue()) {
-                        List<AgdsValue> agdsValues = agdsAttribute.agdsValues.get(columnValue);
-                        for (AgdsValue agdsValue : agdsValues) {
-                            Record record = agdsValue.getRecord();
-                            if (record.checkConditions(query.getAndConditions())) {
-                                records.add(record);
+                    if (query.getGroupedConditionType() != null && query.getGroupedConditionType().equals("OR")) {
+
+                        groupAndConditions(records);
+
+                        Map.Entry<String, List<String>> firstOrGroupedCondition =
+                                query.getGroupedOrConditions().entrySet().iterator().next();
+                        AgdsAttribute agdsAndAttribute = agds.agdsAttributes.get(firstOrGroupedCondition.getKey());
+                        for (String columnValue : firstOrGroupedCondition.getValue()) {
+                            List<AgdsValue> agdsValues = agdsAndAttribute.agdsValues.get(columnValue);
+                            for (AgdsValue agdsValue : agdsValues) {
+                                Record record = agdsValue.getRecord();
+                                if (checkOrConditions(record)) {
+                                    records.add(record);
+                                }
                             }
                         }
+
+                    } else {
+                        groupAndConditions(records);
                     }
                 }
+
                 if (!query.getOrConditions().isEmpty()) {
                     for (Map.Entry<String, List<String>> orCondition : query.getOrConditions().entrySet()) {
                         AgdsAttribute agdsAttribute = agds.agdsAttributes.get(orCondition.getKey());
@@ -94,6 +103,47 @@ public class AssociativeStructureConnection extends Connection {
         }
 
         return null;
+    }
+
+    private boolean checkAndConditions(Record record) {
+
+        String groupedConditionType = query.getGroupedConditionType();
+
+        if (groupedConditionType == null) {
+            return record.checkConditions(query.getAndConditions());
+        } else {
+            return record.checkConditions(query.getAndConditions()) &&
+                    (record.checkGroupedConditions(query.getGroupedAndConditions()) ||
+                            record.checkGroupedConditions(query.getGroupedOrConditions()));
+        }
+    }
+
+    private boolean checkOrConditions(Record record) {
+
+        String groupedConditionType = query.getGroupedConditionType();
+
+        if (groupedConditionType == null) {
+            return record.checkConditions(query.getAndConditions());
+        } else {
+            return record.checkGroupedConditions(query.getGroupedAndConditions()) &&
+                    record.checkGroupedConditions(query.getGroupedOrConditions());
+        }
+    }
+
+    private void groupAndConditions(List<Record> records) {
+
+        Map.Entry<String, List<String>> firstAndCondition =
+                query.getAndConditions().entrySet().iterator().next();
+        AgdsAttribute agdsAttribute = agds.agdsAttributes.get(firstAndCondition.getKey());
+        for (String columnValue : firstAndCondition.getValue()) {
+            List<AgdsValue> agdsValues = agdsAttribute.agdsValues.get(columnValue);
+            for (AgdsValue agdsValue : agdsValues) {
+                Record record = agdsValue.getRecord();
+                if (checkAndConditions(record)) {
+                    records.add(record);
+                }
+            }
+        }
     }
 
     public void generateAgds(MySqlConnection mysql) throws SQLException {

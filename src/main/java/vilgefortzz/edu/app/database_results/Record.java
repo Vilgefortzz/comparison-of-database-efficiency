@@ -22,17 +22,24 @@ public class Record {
 
     public String getColumnValue(String columnName) { return values.get(columnName); }
 
-    public boolean checkConditions(Map<String, List<String>> andConditions) {
+    public boolean checkConditions(Map<String, List<String>> conditions) {
 
-        for (Map.Entry<String, List<String>> andCondition : andConditions.entrySet()) {
-            for (String columnValue : andCondition.getValue()) {
-                if (!getColumnValue(andCondition.getKey()).equals(columnValue)) {
+        for (Map.Entry<String, List<String>> condition : conditions.entrySet()) {
+            for (String columnValue : condition.getValue()) {
+                if (!getColumnValue(condition.getKey()).equals(columnValue)) {
                     return false;
                 }
             }
         }
 
         return true;
+    }
+
+    public boolean checkGroupedConditions(Map<String, List<String>> groupedConditions) {
+
+        if (groupedConditions.isEmpty()) return true;
+
+        return checkConditions(groupedConditions);
     }
 
     @Override
