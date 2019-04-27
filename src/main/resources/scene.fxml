@@ -19,7 +19,7 @@
    <children>
       <Pane prefHeight="200.0" prefWidth="200.0">
          <children>
-            <Label layoutX="154.0" layoutY="14.0" prefHeight="30.0" prefWidth="393.0" text="Comparison of database efficiency app">
+            <Label layoutX="95.0" layoutY="14.0" prefHeight="30.0" prefWidth="475.0" text="Comparison of database efficiency app">
                <font>
                   <Font name="Lato Bold Italic" size="24.0" />
                </font>
@@ -86,10 +86,6 @@
                <font>
                   <Font name="Lato Regular" size="13.0" />
                </font></Button>
-            <ImageView fitHeight="65.0" fitWidth="61.0" layoutX="339.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/pure_sql.png" />
-               </image></ImageView>
             <ImageView fitHeight="65.0" fitWidth="61.0" layoutX="427.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/associative_structure.png" />
@@ -100,12 +96,12 @@
                </font>
             </Label>
             <Separator layoutX="319.0" layoutY="6.0" orientation="VERTICAL" prefHeight="135.0" prefWidth="5.0" />
-            <Label layoutX="537.0" layoutY="23.0" text="Generation time:">
+            <Label layoutX="520.0" layoutY="23.0" text="Generation time:">
                <font>
                   <Font name="Lato Bold Italic" size="13.0" />
                </font>
             </Label>
-            <Label fx:id="generationTimeLabel" alignment="CENTER" contentDisplay="TOP" layoutX="522.0" layoutY="38.0" prefHeight="72.0" prefWidth="122.0" text="..." textAlignment="CENTER">
+            <Label fx:id="generationTimeLabel" alignment="CENTER" contentDisplay="TOP" layoutX="514.0" layoutY="38.0" prefHeight="72.0" prefWidth="122.0" text="..." textAlignment="CENTER">
                <font>
                   <Font size="18.0" />
                </font>
@@ -113,6 +109,11 @@
             <ImageView fitHeight="71.0" fitWidth="61.0" layoutX="14.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/pure_sql.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="51.0" fitWidth="83.0" layoutX="325.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/mysql.png" />
                </image>
             </ImageView>
          </children></Pane>
@@ -143,7 +144,7 @@
                <font>
                   <Font name="Lato Regular" size="13.0" />
                </font></RadioButton>
-            <RadioButton fx:id="associativeStructureRadioButton" layoutX="182.0" layoutY="205.0" mnemonicParsing="false" text="AGDS">
+            <RadioButton fx:id="associativeStructureRadioButton" layoutX="185.0" layoutY="205.0" mnemonicParsing="false" text="AGDS">
                <font>
                   <Font name="Lato Regular" size="13.0" />
                </font></RadioButton>
@@ -152,23 +153,23 @@
                   <Font name="Lato Bold" size="13.0" />
                </font>
             </Label>
-            <TextField fx:id="mysqlDbNameTextField" disable="true" layoutX="253.0" layoutY="167.0" prefHeight="26.0" prefWidth="95.0" promptText="db name" />
+            <TextField fx:id="mysqlDbNameTextField" disable="true" layoutX="251.0" layoutY="167.0" prefHeight="26.0" prefWidth="95.0" promptText="db name" />
             <Label layoutX="252.0" layoutY="172.0">
                <font>
                   <Font name="Lato Regular" size="13.0" />
                </font>
             </Label>
-            <Label layoutX="350.0" layoutY="172.0" text="-&gt;">
+            <Label layoutX="356.0" layoutY="172.0" text="-&gt;">
                <font>
                   <Font name="Lato Regular" size="13.0" />
                </font>
             </Label>
-            <Button fx:id="connectToMysqlDbButton" disable="true" layoutX="363.0" layoutY="167.0" mnemonicParsing="false" onAction="#connectToMysqlDatabase" text="Connect">
+            <Button fx:id="connectToMysqlDbButton" disable="true" layoutX="380.0" layoutY="167.0" mnemonicParsing="false" onAction="#connectToMysqlDatabase" prefHeight="26.0" prefWidth="72.0" text="Connect">
                <font>
                   <Font name="Lato Regular" size="13.0" />
                </font>
             </Button>
-            <ScrollPane fx:id="mysqlDatabasesScrollPane" layoutX="252.0" layoutY="34.0" prefHeight="100.0" prefWidth="170.0">
+            <ScrollPane fx:id="mysqlDatabasesScrollPane" layoutX="253.0" layoutY="34.0" prefHeight="100.0" prefWidth="170.0">
                <content>
                   <Label fx:id="mysqlDatabasesLabel" alignment="TOP_LEFT" prefHeight="98.0" prefWidth="168.0" text="MySQL databases..." wrapText="true">
                      <font>
@@ -177,12 +178,12 @@
                   </Label>
                </content>
             </ScrollPane>
-            <Button fx:id="showMongoDbsButton" layoutX="608.0" layoutY="134.0" mnemonicParsing="false" onAction="#showMongoDatabases" text="Show">
+            <Button fx:id="showMongoDbsButton" layoutX="536.0" layoutY="134.0" mnemonicParsing="false" onAction="#showMongoDatabases" text="Show">
                <font>
                   <Font name="Lato Regular" size="13.0" />
                </font>
             </Button>
-            <ScrollPane fx:id="mongoDatabasesScrollPane" layoutX="488.0" layoutY="34.0" prefHeight="100.0" prefWidth="170.0">
+            <ScrollPane fx:id="mongoDatabasesScrollPane" layoutX="478.0" layoutY="34.0" prefHeight="100.0" prefWidth="170.0">
                <content>
                   <Label fx:id="mongoDatabasesLabel" alignment="TOP_LEFT" prefHeight="98.0" prefWidth="168.0" text="MongoDB databases..." wrapText="true">
                      <font>
@@ -191,18 +192,18 @@
                   </Label>
                </content>
             </ScrollPane>
-            <Button fx:id="showMysqlDbsButton" layoutX="372.0" layoutY="134.0" mnemonicParsing="false" onAction="#showMysqlDatabases" text="Show">
+            <Button fx:id="showMysqlDbsButton" layoutX="311.0" layoutY="134.0" mnemonicParsing="false" onAction="#showMysqlDatabases" text="Show">
                <font>
                   <Font name="Lato Regular" size="13.0" />
                </font>
             </Button>
-            <TextField fx:id="mongoDbNameTextField" disable="true" layoutX="488.0" layoutY="167.0" prefHeight="26.0" prefWidth="95.0" promptText="db name" />
-            <Label layoutX="583.0" layoutY="172.0" text="-&gt;">
+            <TextField fx:id="mongoDbNameTextField" disable="true" layoutX="478.0" layoutY="167.0" prefHeight="26.0" prefWidth="95.0" promptText="db name" />
+            <Label layoutX="581.0" layoutY="172.0" text="-&gt;">
                <font>
                   <Font name="Lato Regular" size="13.0" />
                </font>
             </Label>
-            <Button fx:id="connectToMongoDbButton" disable="true" layoutX="599.0" layoutY="167.0" mnemonicParsing="false" onAction="#connectToMongoDatabase" text="Connect">
+            <Button fx:id="connectToMongoDbButton" disable="true" layoutX="605.0" layoutY="167.0" mnemonicParsing="false" onAction="#connectToMongoDatabase" text="Connect">
                <font>
                   <Font name="Lato Regular" size="13.0" />
                </font>
@@ -215,12 +216,12 @@
                   <Font name="Lato Bold" size="13.0" />
                </font>
             </Label>
-            <Label layoutX="546.0" layoutY="37.0" text="Query time:" textFill="#09c658">
+            <Label layoutX="537.0" layoutY="37.0" text="Query time:" textFill="#09c658">
                <font>
                   <Font name="Lato Bold Italic" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="queryTimeLabel" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="489.0" layoutY="74.0" prefHeight="80.0" prefWidth="203.0" text="..." textAlignment="CENTER">
+            <Label fx:id="queryTimeLabel" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="489.0" layoutY="69.0" prefHeight="80.0" prefWidth="203.0" text="..." textAlignment="CENTER">
                <font>
                   <Font name="Lato Regular" size="18.0" />
                </font>
