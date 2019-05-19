@@ -35,7 +35,8 @@ public class MongoDbQuery extends Query {
         projectionQuery = projectionQuery.split("\\(")[1];
         projectionQuery = projectionQuery.split("\\)")[0];
 
-        if (projectionQuery.equals(findAll)) {
+        if (projectionQuery.equals(findAll) ||
+                projectionQuery.split(", +", 2).length == 1) {
             this.projectionQuery = findAll;
         } else {
             this.projectionQuery = projectionQuery.split(", +", 2)[1];
